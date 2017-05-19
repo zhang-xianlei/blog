@@ -1,3 +1,2 @@
 #忽略IDE生成的文件
-    .idea
-    .idea/
+.idea/
