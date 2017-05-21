@@ -19,6 +19,10 @@
     font-style: normal;
 }
 
+body {
+    background: #c4cec4;
+}
+
 h2 {
     font-family: Alex_Brush_Regular;
     font-style: normal;
@@ -30,9 +34,5 @@ h2 {
 p {
     font-family: Indie_Flower;
     color: #00f;
-}
-
-body {
-    font-family: "Indie Flower";
 }
 
