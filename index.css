@@ -19,12 +19,12 @@
     font-style: normal;
 }
 
-
 h2 {
-    font-family:Alex_Brush_Regular;
+    font-family: Alex_Brush_Regular;
     font-style: normal;
-    font-size:30px;
+    font-size: 30px;
     color: #0f0;
+    cursor: pointer;
 }
 
 p {
@@ -32,7 +32,7 @@ p {
     color: #00f;
 }
 
-body{
+body {
     font-family: "Indie Flower";
 }
 
