@@ -1,3 +1,38 @@
-h2{
-    color: #0f0;   
+@font-face {
+    font-family: Indie_Flower;
+    src: url("./src/webfont/IndieFlower.ttf");
+    font-weight: normal;
+    font-style: normal;
 }
+
+@font-face {
+    font-family: Alex_Brush_Regular;
+    src: url("./src/webfont/AlexBrushRegular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: CAC_Champagne;
+    src: url("./src/webfont/CACChampagne.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+h2 {
+    font-family:Alex_Brush_Regular;
+    font-style: normal;
+    font-size:30px;
+    color: #0f0;
+}
+
+p {
+    font-family: Indie_Flower;
+    color: #00f;
+}
+
+body{
+    font-family: "Indie Flower";
+}
+
