@@ -1,0 +1,16 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "This project contains zhang-xianlei`s blogs about the knowledge of frontend. It`ll be a process to accumulating in work.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhang-xianlei/blog.git"
+  },
+  "keywords": ["前端","随笔","笔记", "译文","JavaScript"],
+  "author": "“zhang-xianlei",
+  "license": "ISC"
+}
