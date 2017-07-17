@@ -4,13 +4,37 @@
   "description": "This project contains zhang-xianlei`s blogs about the knowledge of frontend. It`ll be a process to accumulating in work.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "dev": "webpack-dev-server --hot"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/zhang-xianlei/blog.git"
   },
-  "keywords": ["前端","随笔","笔记", "译文","JavaScript"],
+  "keywords": [
+    "前端",
+    "随笔",
+    "笔记",
+    "译文",
+    "JavaScript"
+  ],
   "author": "“zhang-xianlei",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^2.29.0",
+    "webpack": "^3.2.0",
+    "webpack-dev-server": "^2.5.1",
+    "webpack-manifest-plugin": "^1.1.2"
+  },
+  "dependencies": {
+    "clean-webpack-plugin": "^0.1.16",
+    "css-loader": "^0.28.4",
+    "csv-loader": "^2.1.1",
+    "file-loader": "^0.11.2",
+    "html-webpack-plugin": "^2.29.0",
+    "loadash": "0.0.1",
+    "style-loader": "^0.18.2",
+    "xml-loader": "^1.2.1"
+  }
 }
