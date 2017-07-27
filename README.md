@@ -5,3 +5,11 @@
 
 ### 计划
 逐渐积累，无止境......
+
+summarize experiences from building this project
+
+    1.new js syntax using
+        install the babel-core babel-loader etc plugins
+        new file named .babelrc, and setup it
+        at the same time use the happyPack and setup it in the plugins section
+        
