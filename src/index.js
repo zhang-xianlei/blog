@@ -12,12 +12,9 @@ function component() {
 
     btn.innerHTML = 'Click me and check the console!';
     btn.onclick = printMe;
-
+    btn.style.height = 'auto';
     element.appendChild(btn);
 
     return element;
-}
-if (module.hot) {
-
 }
 document.body.appendChild(component());

@@ -12,9 +12,9 @@ module.exports = {
         print: './src/print.js'
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: "/dist/",
-        filename: '[name].bundle.js'
+        path: path.resolve(__dirname, 'build'),
+        filename: '[name].bundle.js',
+        publicPath: "/build/"
     },
     module: {
         rules: [
@@ -52,6 +52,7 @@ module.exports = {
 
         ]
     },
+    devtool: 'source-map',
     plugins: [
         new WebpackManifestPlugin(),
         new HtmlWebpackPlugin({
@@ -60,7 +61,8 @@ module.exports = {
         })
     ],
     devServer: {
-        port: 9000,
-        hot: true
+        port: 80,
+        hot: true,
+        disableHostCheck: true
     }
 };
