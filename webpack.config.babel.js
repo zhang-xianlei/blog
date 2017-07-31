@@ -3,18 +3,18 @@
  */
 
 import path from 'path'
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import WebpackManifestPlugin from 'webpack-manifest-plugin';
-import HappyPack from 'happypack';
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import WebpackManifestPlugin from 'webpack-manifest-plugin'
+import HappyPack from 'happypack'
+import {entries, htmlConfs} from "./utility/multPagesHtmlConfig"
+
 
 module.exports = {
-    entry: {
-        home: path.resolve(__dirname, './pages/home/src/script/index')
-    },
+    context: path.resolve(process.cwd(), 'pages'),
+    entry: entries,
     output: {
         path: path.resolve(__dirname, 'dist/'),
         filename: '[name].bundle.js',
-        publicPath: "./dist/ "
     },
     module: {
         rules: [
@@ -28,10 +28,7 @@ module.exports = {
     devtool: 'source-map',
     plugins: [
         new WebpackManifestPlugin(),
-        new HtmlWebpackPlugin({
-            title: 'Leo Blog',
-            filename: 'home.html'
-        }),
+        ...htmlConfs,
         new HappyPack({
             cache: true,
             loaders: [
