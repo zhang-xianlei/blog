@@ -15,8 +15,7 @@ module.exports = {
     entry: entries,
     output: {
         path: path.resolve(__dirname, 'dist/'),
-        filename: '[name].bundle.js',
-        publicPath: "./"
+        filename: '[name].bundle.js'
     },
     module: {
         rules: [
@@ -68,7 +67,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-        port: 80,
+        port: 8000,
         hot: true,
         disableHostCheck: true
     }
