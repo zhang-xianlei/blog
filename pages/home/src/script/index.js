@@ -1,6 +1,6 @@
 function addDiv() {
     let div = document.createElement('div');
-    div.innerHTML = "hello web";
+    div.innerHTML = "hello  webpack!";
     document.body.appendChild(div);
 }
 

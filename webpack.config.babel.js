@@ -3,6 +3,7 @@
  */
 
 import path from 'path'
+import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import WebpackManifestPlugin from 'webpack-manifest-plugin'
 import HappyPack from 'happypack'
@@ -15,6 +16,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist/'),
         filename: '[name].bundle.js',
+        publicPath: "./"
     },
     module: {
         rules: [
@@ -62,7 +64,8 @@ module.exports = {
             ]
 
 
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
         port: 80,
