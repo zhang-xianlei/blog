@@ -8,8 +8,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import WebpackManifestPlugin from 'webpack-manifest-plugin'
 import HappyPack from 'happypack'
 import {entries, htmlConfs} from "./utility/multPagesHtmlConfig"
-
-
 module.exports = {
     context: path.resolve(process.cwd(), 'pages'),
     entry: entries,
@@ -20,13 +18,24 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /.js$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
                 use: 'happyPack/loader'
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             }
         ]
     },
     devtool: 'source-map',
+    resolve: {
+        modules: [path.resolve(__dirname, 'node_modules')],
+        alias: {
+            "@share": path.resolve(__dirname, "./src")
+        }
+
+    },
     plugins: [
         new WebpackManifestPlugin(),
         ...htmlConfs,

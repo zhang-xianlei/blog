@@ -1,4 +1,4 @@
-function findIndex(arrayObj, keyStr, valueStr) {
+export const findIndex = (arrayObj, keyStr, valueStr) => {
     let indexFind = -1;
     arrayObj.some((elem, index) => {
         indexFind = index;
@@ -7,4 +7,3 @@ function findIndex(arrayObj, keyStr, valueStr) {
     return indexFind
 }
 
-exports.findIndex = findIndex
