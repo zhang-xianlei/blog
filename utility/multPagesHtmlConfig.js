@@ -17,9 +17,6 @@ pages.forEach((page) => {
     htmlConfs.push(htmlConf)
     entries[page] = './' + page + '/src/script/index'
 })
-console.log(htmlConfs)
-console.log(entries)
-
 export {
     htmlConfs,
     entries

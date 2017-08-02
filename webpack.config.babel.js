@@ -14,7 +14,7 @@ module.exports = {
     context: path.resolve(process.cwd(), 'pages'),
     entry: entries,
     output: {
-        path: path.resolve(__dirname, 'dist/'),
+        path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js'
     },
     module: {
@@ -67,7 +67,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-        port: 8000,
+        port: 80,
         hot: true,
         disableHostCheck: true
     }
