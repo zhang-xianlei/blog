@@ -1,5 +1,5 @@
-import gui from '@share/style/gui.css'
-import css from '../style/index.css'
+import gui from '@share/style/gui.scss'
+import css from '../style/index.scss'
 import {findIndex} from '@share/script/global.js'
 function addDiv() {
     let div = document.createElement('div');

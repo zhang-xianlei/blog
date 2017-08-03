@@ -5,9 +5,16 @@
 import path from 'path'
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin'
 import WebpackManifestPlugin from 'webpack-manifest-plugin'
 import HappyPack from 'happypack'
 import {entries, htmlConfs} from "./utility/multPagesHtmlConfig"
+
+const extractSass = new ExtractTextWebpackPlugin({
+    filename: '[name].[contenthash].css',
+    disable: process.env.NODE_ENV === 'development'
+})
+
 module.exports = {
     context: path.resolve(process.cwd(), 'pages'),
     entry: entries,
@@ -23,8 +30,23 @@ module.exports = {
                 use: 'happyPack/loader'
             },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                test: /\.[s]css$/,
+                use: extractSass.extract({
+                    use: [
+                        'css-loader',
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                includePaths: [
+                                    'pages',
+                                    'src'
+                                ],
+                                sourceMap: true
+                            }
+                        }
+                    ],
+                    fallback: 'style-loader'
+                })
             }
         ]
     },
@@ -73,7 +95,8 @@ module.exports = {
 
 
         }),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        extractSass
     ],
     devServer: {
         port: 80,
