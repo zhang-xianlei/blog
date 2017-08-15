@@ -4,10 +4,11 @@
   "description": "This project contains zhang-xianlei`s blogs about the knowledge of frontend. It`ll be a process to accumulating in work.",
   "main": "index.js",
   "scripts": {
+    "dll": "webpack --cofig ./webpack.dll.config.babel.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
     "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.babel.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --port 3000 --host 0.0.0.0"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --host 0.0.0.0"
   },
   "repository": {
     "type": "git",
@@ -41,5 +42,9 @@
     "webpack-dev-server": "^2.5.1",
     "webpack-manifest-plugin": "^1.1.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-polyfill": "^6.23.0",
+    "es5-shim": "^4.5.9",
+    "jquery": "^3.2.1"
+  }
 }
