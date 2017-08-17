@@ -2,9 +2,224 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>点亮名人赛</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.3,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no,email=no,address=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <script>
+        var documentEle = document.documentElement,
+            viewWidth = documentEle.clientWidth;
+        documentEle.style.fontSize = viewWidth / 3.75 + 'px';
+    </script>
+    <style>
+        body {
+            font-size: .12rem;
+            padding: 0;
+            margin: 0;
+            background: #0d0816;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            vertical-align: bottom;
+        }
+
+        header {
+            height: 1rem;
+        }
+
+        .theme {
+            width: 3.2rem;
+            border: 1px solid #4a1921;
+            color: #fff;
+            font-size: 20px;
+            text-align: center;
+            margin: 0 auto;
+            padding: .12rem 0;
+        }
+
+        .main-content {
+            width: 3.2rem;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .groups-info {
+            width: 1.45rem;
+            margin-bottom: .2rem;
+            text-align: center;
+        }
+
+        .group-name {
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            width: 1.45rem;
+            height: .72rem;
+            line-height: .72rem;
+            margin: .3rem auto .23rem;
+        }
+
+        .list-title {
+            font-size: 20px;
+            margin-bottom: .13rem;
+        }
+
+        .group-member {
+            font-size: 15px;
+            height: .3rem;
+            line-height: .3rem;
+        }
+
+        .red-group {
+            float: left;
+            color: #ce372e;
+        }
+
+        .red-group .group-name {
+            background: linear-gradient(to right, #da382d, #c3352e);
+        }
+
+        .blue-group {
+            float: right;
+            color: #3768e9;
+        }
+
+        .blue-group .group-name {
+            background: linear-gradient(to right, #3462db, #376bef);
+        }
+
+        @keyframes redLight {
+            from {
+                background-color: #ff2530;
+            }
+            to {
+                background-color: #8a1219;
+            }
+        }
+
+        @keyframes blueLight {
+            from {
+                background-color: #1d6cff;
+            }
+            to {
+                background-color: #031f7b;
+            }
+        }
+
+        .notify-light {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .light-tip {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            left: 0;
+            color: #fff;
+            font-size: 20px;
+            text-align: center;
+            margin-top: -20px;
+        }
+
+        .red-light {
+            animation: redLight 2.5s infinite alternate;
+            background-color: #8a1219;
+        }
+
+        .blue-light {
+            animation: blueLight 2.5s infinite alternate;
+            background-color: #031f7b;
+        }
+    </style>
 </head>
 <body>
-<div>what you want</div>
+<header>
+    <img/>
+</header>
+<section class="theme">
+    选择你喜欢的球队<br/>用你的手机照亮东方体育馆
+</section>
+<section class="main-content">
+    <div class="groups-info red-group">
+        <div data-light="red-light" class="group-name">
+            红队
+        </div>
+        <div class="list-title">[名单]</div>
+        <div class="group-member">吴亦凡、艾弗森</div>
+        <div class="group-member">吴亦凡、艾弗森</div>
+        <div class="group-member">吴亦凡、艾弗森</div>
+        <div class="group-member">吴亦凡、艾弗森</div>
+        <div class="group-member">吴亦凡、艾弗森</div>
+    </div>
+    <div class="groups-info blue-group">
+        <div data-light="blue-light" class="group-name">
+            蓝队
+        </div>
+        <div class="list-title">[名单]</div>
+        <div class="group-member">吴亦凡、艾弗森</div>
+        <div class="group-member">吴亦凡、艾弗森</div>
+        <div class="group-member">吴亦凡、艾弗森</div>
+        <div class="group-member">吴亦凡、艾弗森</div>
+        <div class="group-member">吴亦凡、艾弗森</div>
+    </div>
+</section>
+<section class="notify-light">
+    <div class="light-tip">
+        挥舞你的手机，让大家知道<br/>你支持的是红队还是蓝队
+    </div>
+</section>
 </body>
+<script>
+    /**
+     * 对呼吸灯的处理，依据参赛队，选择相应的背景颜色；
+     * @param event
+     */
+    function lightLight(event) {
+        var silverDom = document.querySelector('.notify-light'),
+            silverClass = event.target.getAttribute('data-light');
+        silverDom.removeAttribute('class');
+        silverDom.setAttribute('class', silverClass + ' notify-light');
+        silverDom.style.display = 'block';
+    }
+
+    function addEventHandler(domObj, type, func) {
+        if (window.addEventListener) {
+            domObj.addEventListener(type, func, false)
+        } else if (window.attachEvent) {
+            domObj.attachEvent(type, func)
+        } else {
+            domObj['on' + type] = func
+        }
+    }
+
+    window.onload = function () {
+        var ifNet4G = location.search.indexOf('net=1') >= 0,
+            imgUrl = 'http://mat1.gtimg.com/sports/sportAppWeb/m-kbs-app/statistic/2LqVxNzW.jpg', // todo 确认此处的链接
+            imgDom = document.querySelector('img'),
+            headerDom = document.querySelector('header'),
+            groups = document.querySelectorAll('.group-name');
+        if (ifNet4G) {
+            imgDom.setAttribute('src', imgUrl);
+            headerDom.style.height = 'auto';
+        }
+
+        for (var i = 0; i < groups.length; i++) {
+            addEventHandler(groups[i], 'click', lightLight)
+        }
+
+    };
+    // todo 上线前确认队员名单
+</script>
 </html>
