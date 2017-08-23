@@ -4,11 +4,13 @@
 
 import path from 'path'
 import webpack from 'webpack'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin'
 import WebpackManifestPlugin from 'webpack-manifest-plugin'
 import HappyPack from 'happypack'
 import {entries, htmlConfs} from "./utility/multPagesHtmlConfig"
+import config from './config'
+
+let happyThreadPool = HappyPack.ThreadPool({size: require('os').cpus().length});
 
 const extractSass = new ExtractTextWebpackPlugin({
     filename: '[name].[contenthash].css',
@@ -67,31 +69,13 @@ module.exports = {
                 {
                     loader: 'babel-loader',
                     include: [
-                        path.resolve(__dirname, './pages')
+                        path.resolve(__dirname, './pages'),
+                        path.resolve(__dirname, './src'),
                     ],
-                    query: {
-                        cacheDirectory: true,
-                        babelrc: false,
-                        presets: [
-                            ["env",
-                                {
-                                    "targets": {
-                                        "browsers": ["last 2 versions", "ie>=9"]
-                                    },
-                                    "modules": false,
-                                    "useBuiltIns": true,
-                                    "debug": true,
-                                    "loose": false
-                                }
-                            ],
-                            "stage-0"
-                        ],
-                        plugins: [
-                            "minify-dead-code-elimination", "transform-runtime"
-                        ]
-                    }
+                    query: config.babelLoaderQuery
                 }
-            ]
+            ],
+            threadPool: happyThreadPool
 
 
         }),

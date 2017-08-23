@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>点亮名人赛</title>
+    <title><%= htmlWebpackPlugin.options.title %></title>
     <meta name="viewport"
           content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.3,user-scalable=no"/>
     <meta name="format-detection" content="telephone=no,email=no,address=no"/>
@@ -180,6 +180,7 @@
         挥舞你的手机，让大家知道<br/>你支持的是红队还是蓝队
     </div>
 </section>
+<script src="<%= htmlWebpackPlugin.options.dllName %> "></script>
 </body>
 <script>
     /**

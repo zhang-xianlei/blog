@@ -1,12 +1,15 @@
+import AssetsPlugin from 'assets-webpack-plugin';
 import path from 'path';
 import webpack from 'webpack';
 import HappyPack from 'happypack';
 import config from './config'
+
 const vendors = [
     'jquery',
     'es5-shim',
     'babel-polyfill'
 ];
+let happyThreadPool = HappyPack.ThreadPool({size: require('os').cpus().length})
 module.exports = {
     entry: {
         vendor: vendors
@@ -31,7 +34,7 @@ module.exports = {
             context: __dirname,
             path: path.join(__dirname, './dist', '[name]_manifest.json'),
         }),
-        new webpack.HashedModulesIdsPlugin(),
+        new webpack.HashedModuleIdsPlugin(),
         new HappyPack({
             cache: true,
             loaders: [{
@@ -41,7 +44,13 @@ module.exports = {
                     path.resolve(__dirname, 'src')
                 ],
                 query: config.babelLoaderQuery
-            }]
+            }],
+            threadPool: happyThreadPool
+        }),
+        new webpack.optimize.UglifyJsPlugin(config.uglify),
+        new AssetsPlugin({
+            filename: 'dll-config.json',
+            path: './dist'
         })
     ]
 };
