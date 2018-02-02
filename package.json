@@ -46,6 +46,8 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "es5-shim": "^4.5.9",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "vue-loader": "^13.5.0",
+    "vue-template-compiler": "^2.5.9"
   }
 }

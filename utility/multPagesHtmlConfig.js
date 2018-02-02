@@ -15,7 +15,7 @@ pages.forEach((page) => {
         filename: page + '.html',
         template: './' + page + '/index.html',
         chunks: [page],
-        dllName: '/dist/script/' + dllConfig.vendor.js
+        dllName: './script/' + dllConfig.vendor.js
     })
     htmlConfs.push(htmlConf)
     entries[page] = './' + page + '/src/script/index'
@@ -23,4 +23,4 @@ pages.forEach((page) => {
 export {
     htmlConfs,
     entries
-}
+} 
