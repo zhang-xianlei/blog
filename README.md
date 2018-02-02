@@ -4,7 +4,7 @@
 #####列表
 1. [let const](./doc/let.md)  
 2. [Regex](./doc/regex.md "Regex")  
-3. [百度] [baidu]
+3. [百度] [link]
 
 
-[baidu]: www.baidu.cn
+[link]: http://www.baidu.cn "baidu"
