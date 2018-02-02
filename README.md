@@ -1,17 +1,8 @@
+前言：自从认真的看完JavaScript高级程序设计（第三版）之后，已经过去了两年，至今都没有静下心来看技术书籍。建立这个blog就是为了
+敦促自己，每天进步一点点，将ES6的语法夯实。
 
-    1.new js syntax using
-        install the babel-core babel-loader etc plugins
-        new file named .babelrc, and setup it
-        at the same time use the happyPack and setup it in the plugins section
-    2.integration the css-loader and ExtractTextPlugin
-        make the hot replacement come true
-        compile the css file include the sass and postcss
-        learn the concept and useage of the variable in css
-    3.integration the sass (8/3 4 tomatoes)
-        i.have a abstract knowledge of the sass
-        ii.setup the reference loader
-        iii.accomplish the css compiling
-#### 列表
+2018/02/02
+
 学习列表
 
-[let](./doc/let.md)
+1.[let](./doc/let.md)
