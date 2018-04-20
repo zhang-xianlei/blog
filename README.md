@@ -8,42 +8,37 @@ ES modules bring an official, standardized module system to JavaScript. It took 
 ES 模块是的 js 官方的 、标准化的模块规范 ，模块规范的标准化历经了将近10年之久 。
 
 But the wait is almost over. With the release of Firefox 60 in May (currently in beta), all major browsers will support ES modules, and the Node modules working group is currently working on adding ES module support to Node.js. And ES module integration for WebAssembly is underway as well.  
-不过 ，这个等待即将结束 。伴随着5月份火狐浏览器 60 版本的发布 ，主流的浏览器都将支持 ES 模块 ，并且 Node 模块工作组 ，目前正在增加 ES 模块的支持 。WebAssembly 集成 ES 模块的工作也在进行中 。
-
+不过 ，这个等待即将结束 。伴随着5月份火狐浏览器 60 版本的发布 ，主流的浏览器都将支持 ES 模块 ，并且 Node 模块工作组 ，目前正在增加 ES 模块的支持 。WebAssembly 集成 ES 模块的工作也在进行中 。  
 Many JavaScript developers know that ES modules have been controversial. But few actually understand how ES modules work.  
-大多数 js 开发者知道 ES 模块是有争议的 。但是很少能够真正的明白 ES 模块是如何工作的 。
-
-Let’s take a look at what problem ES modules solve and how they are different from modules in other module systems.   
-让我们看一下 ES 模块解决哪些问题 ，以及它们与其他模块规范的模块有何不同 。
+大多数 js 开发者知道 ES 模块是有争议的 。但是很少能够真正的明白 ES 模块是如何工作的 。  
+Let’s take a look at what problem ES modules solve and how they are different from modules in other module systems.  
+让我们看一下 ES 模块解决哪些问题 ，以及它们与其他模块规范的模块有何不同 。  
 What problem do modules solve?  
-解决什么问题
+解决什么问题  
 When you think about it, coding in JavaScript is all about managing variables. It’s all about assigning values to variables, or adding numbers to variables, or combining two variables together and putting them into another variable.  
-当仔细想下 ，使用 JS 编码都是与处理变量相关 。为变量赋值 ，或者为变量增加数值 ，再或者 ，合并两个变量并将两者赋值给其他的变量 。
+当仔细想下 ，使用 JS 编码都是与处理变量相关 。为变量赋值 ，或者为变量增加数值 ，再或者 ，合并两个变量并将两者赋值给其他的变量 。  
 Because so much of your code is just about changing variables, how you organize these variables is going to have a big impact on how well you can code… and how well you can maintain that code.   
 因为你大部分的代码就只是在处理变量 ，所以如何组织这些变量将会在你如何更好的编码 ，以及如何更好的组织代码有很大的影响 。  
 Having just a few variables to think about at one time makes things easier. JavaScript has a way of helping you do this, called scope. Because of how scopes work in JavaScript, functions can’t access variables that are defined in other functions.   
-只有少量的变量需要同时去考虑能够让编码变得简单 。 Js 的作用域是一个解决办法 。也是因为作用域的工作机理 ，导致了方法之间不能获取到定义在其他方法的变量 。  
+只有少量的变量需要同时去考虑能够让编码变得简单 。 Js 的作用域是一个解决办法 。也是因为作用域的工作机理 ，导致了方法之间不能获取到定义在其他方法的变量 。    
 This is good. It means that when you’re working on one function, you can just think about that one function. You don’t have to worry about what other functions might be doing to your variables.  
-这样处理的好处是 ，当你编写当前方法时 ，不需要担心其他的方法对你的变量有影响 。
+这样处理的好处是 ，当你编写当前方法时 ，不需要担心其他的方法对你的变量有影响 。  
 It also has a downside, though. It does make it hard to share variables between different functions.  
-当然 ，也有不利的一面 。这样使得不同方法之间共享变量变得很难 。
+当然 ，也有不利的一面 。这样使得不同方法之间共享变量变得很难 。  
 What if you do want to share your variable outside of a scope? A common way to handle this is to put it on a scope above you… for example, on the global scope.  
-如果想暴露出当前作用域的变量 ，一般的处理方式就是在上层作用域定义变量 ，比如在全局中定义变量 。
+如果想暴露出当前作用域的变量 ，一般的处理方式就是在上层作用域定义变量 ，比如在全局中定义变量 。  
 You probably remember this from the jQuery days. Before you could load any jQuery plug-ins, you had to make sure that jQuery was in the global scope.  
-你应该还记得 jQuery 时代的实现方式 ，在你加载 jQuery 插件之前 ，你都要先确认 jQuery 在全局中引用 。    
-This works, but they are some annoying problems that result.
-这样做是行得通的 ，但是它们会带来很多麻烦 。
-First, all of your script tags need to be in the right order. Then you have to be careful to make sure that no one messes up that order.
-第一 ， 必须将所有的 script 标签正确的排序 ，然后你还必须小心翼翼的确保没有一个搞混顺序 。
-If you do mess up that order, then in the middle of running, your app will throw an error. When the function goes looking for jQuery where it expects it — on the global — and doesn’t find it, it will throw an error and stop executing.
-如果搞混了顺序 ，在应用运行过程中 ，会报错 。当一个方法在它期望的地方想要查找 jQuery （例如全局） ，但是没有找到 ，它就会报错 ，并停止执行 。
-
-
-
-This makes maintaining code tricky. It makes removing old code or script tags a game of roulette. You don’t know what might break. The dependencies between these different parts of your code are implicit. Any function can grab anything on the global, so you don’t know which functions depend on which scripts.
-这样的后果 ，就是在处理代码时要谨小慎微 。使得删除老代码或者 script 标签就像是在玩轮盘赌 。你不知道什么会崩溃 。不同代码之间的相互依赖含糊不清 。任意方法都能获取到全局中的任何对象 ，所以你搞不清方法依赖哪个脚本 。
-A second problem is that because these variables are on the global scope, every part of the code that’s inside of that global scope can change the variable. Malicious code can change that variable on purpose to make your code do something you didn’t mean for it to, or non-malicious code could just accidentally clobber your variable.
-第二个问题是因为这些变量都是暴露在全局 ，所以全局下的各个部分的代码都可以改变变量的值 。恶意代码会有目的的改变你的代码使之不按预定的目标执行 ，或者非恶意的代码很可能会重新定义你的变量 。
+你应该还记得 jQuery 时代的实现方式 ，在你加载 jQuery 插件之前 ，你都要先确认 jQuery 在全局中引用 。  
+This works, but they are some annoying problems that result.  
+这样做是行得通的 ，但是它们会带来很多麻烦 。  
+First, all of your script tags need to be in the right order. Then you have to be careful to make sure that no one messes up that order.  
+第一 ， 必须将所有的 script 标签正确的排序 ，然后你还必须小心翼翼的确保没有一个搞混顺序 。  
+If you do mess up that order, then in the middle of running, your app will throw an error. When the function goes looking for jQuery where it expects it — on the global — and doesn’t find it, it will throw an error and stop executing.  
+如果搞混了顺序 ，在应用运行过程中 ，会报错 。当一个方法在它期望的地方想要查找 jQuery （例如全局） ，但是没有找到 ，它就会报错 ，并停止执行 。  
+This makes maintaining code tricky. It makes removing old code or script tags a game of roulette. You don’t know what might break. The dependencies between these different parts of your code are implicit. Any function can grab anything on the global, so you don’t know which functions depend on which scripts.  
+这样的后果 ，就是在处理代码时要谨小慎微 。使得删除老代码或者 script 标签就像是在玩轮盘赌 。你不知道什么会崩溃 。不同代码之间的相互依赖含糊不清 。任意方法都能获取到全局中的任何对象 ，所以你搞不清方法依赖哪个脚本 。  
+A second problem is that because these variables are on the global scope, every part of the code that’s inside of that global scope can change the variable. Malicious code can change that variable on purpose to make your code do something you didn’t mean for it to, or non-malicious code could just accidentally clobber your variable.  
+第二个问题是因为这些变量都是暴露在全局 ，所以全局下的各个部分的代码都可以改变变量的值 。恶意代码会有目的的改变你的代码使之不按预定的目标执行 ，或者非恶意的代码很可能会重新定义你的变量 。  
 How do modules help?
 模块能做什么？
 Modules give you a better way to organize these variables and functions. With modules, you group the variables and functions that make sense to go together.
