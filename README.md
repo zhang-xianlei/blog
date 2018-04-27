@@ -28,7 +28,7 @@ numbers to variables, or combining two variables together and putting
 them into another variable.  
 当仔细想下 ，使用 JS 编码都是与处理变量相关 。为变量执行 ，或者为变量增加数值 ，
 再或者 ，合并两个变量并将两者执行给其他的变量 。  
-![img](https://hacks.mozilla.org/files/2018/03/01_variables-768x273.png)
+![img](https://hacks.mozilla.org/files/2018/03/01_variables-768x273.png)  
 Because so much of your code is just about changing variables, how 
 you organize these variables is going to have a big impact on how
 well you can code… and how well you can maintain that code.  
@@ -40,7 +40,7 @@ Because of how scopes work in JavaScript, functions can’t access
 variables that are defined in other functions.  
 只有少量的变量需要同时去考虑能够让编码变得简单 。 Js 的作用域是一个解决办法 。
 也是因为作用域的工作机理 ，导致了方法之间不能获取到定义在其他方法的变量 。  
-![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_01-768x448.png)
+![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_01-768x448.png)  
 This is good. It means that when you’re working on one function, you 
 can just think about that one function. You don’t have to worry about 
 what other functions might be doing to your variables.  
@@ -58,7 +58,7 @@ load any jQuery plug-ins, you had to make sure that jQuery was in
 the global scope.  
 你应该还记得 jQuery 时代的实现方式 ，在你加载 jQuery 插件之前 ，你都要先确认 
 jQuery 在全局中引用 。  
-![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_02-768x691.png)
+![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_02-768x691.png)  
 This works, but they are some annoying problems that result.  
 这样做是行得通的 ，但是它们会带来很多麻烦 。  
 First, all of your script tags need to be in the right order. Then 
@@ -71,7 +71,7 @@ it expects it — on the global — and doesn’t find it, it will throw
 an error and stop executing.  
 如果搞混了顺序 ，在应用运行过程中 ，会报错 。当一个方法在它期望的地方想要查找 
 jQuery （例如全局） ，但是没有找到 ，它就会报错 ，并停止执行 。  
-![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_03-768x691.png)
+![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_03-768x691.png)  
 This makes maintaining code tricky. It makes removing old code or 
 script tags a game of roulette. You don’t know what might break. 
 The dependencies between these different parts of your code are 
@@ -111,7 +111,7 @@ export. Once you have an export, other modules can explicitly say
 that they depend on that variable, class or function.  
 使当前模块的对象能够在其他模块中使用 ，这种处理方式称为 export 。一旦模块有一个输
 出 ，其他的模块可以清晰的说明它们依赖输出中的对象 、类或者方法 。  
-![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_04-768x691.png)
+![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_04-768x691.png)  
 Because this is an explicit relationship, you can tell which modules 
 will break if you remove another one.  
 因为这种明确的依赖关系，所以当你删除某个模块时能够明确的知道哪些模块会崩溃。  
@@ -148,14 +148,14 @@ point to the graph. From there it just follows any of the import
 statements to find the rest of the code.  
 这些依赖声明使得浏览器或者 Node 准确的加载资源 。 你可以建一个文件作为依赖图谱的
 入口 ，通过跟踪入口文件的任何一个引入声明找到相关的代码 。  
-![img](https://hacks.mozilla.org/files/2018/03/04_import_graph-768x447.png)
+![img](https://hacks.mozilla.org/files/2018/03/04_import_graph-768x447.png)  
 But files themselves aren’t something that the browser can use. It 
 needs to parse all of these files to turn them into data structures 
 called Module Records. That way, it actually knows what’s going on 
 in the file.  
 浏览器并不能直接使用这些文件 ，需要解析所有的文件生成一个称为模块记录的数据结构 。
 通过这种方式 ，浏览器才能知道文件的功能。 
-![img](https://hacks.mozilla.org/files/2018/03/05_module_record-768x441.png)
+![img](https://hacks.mozilla.org/files/2018/03/05_module_record-768x441.png)  
 After that, the module record needs to be turned into a module 
 instance. An instance combines two things: the code and state.  
 除此之外 ， 模块记录需要转变成一个模块实例 。一个实例由两种事物组成 ： 代码和状态 。  
@@ -173,7 +173,7 @@ the values.
 So the module instance combines the code (the list of instructions) 
 with the state (all the variables’ values).  
 所以得出 ，模块实例是代码（一些列的指令）和状态（所有变量的值）的组合 。 
-![img](https://hacks.mozilla.org/files/2018/03/06_module_instance-768x572.png)
+![img](https://hacks.mozilla.org/files/2018/03/06_module_instance-768x572.png)  
 What we need is a module instance for each module. The process of 
 module loading is going from this entry point file to having a full 
 graph of module instances 。  
@@ -191,7 +191,7 @@ the variables’ actual values.
 实例化—找到内存中的盒子用输出的值去占位（但是并不赋 值）。然后将输出和引入只想内存中
 的盒子，这个过程称为连结 。  
 执行 —执行代码，用真实的值填充到相应的盒子 。  
-![img](https://hacks.mozilla.org/files/2018/03/07_3_phases-768x282.png)
+![img](https://hacks.mozilla.org/files/2018/03/07_3_phases-768x282.png)  
 People talk about ES modules being asynchronous. You can think about 
 it as asynchronous because the work is split into these three 
 different phases — loading, instantiating, and evaluating — and 
@@ -222,14 +222,14 @@ in a different specification. For browsers, that spec is the HTML spec.
 But you can have different loaders based on what platform you are using.  
 是加载器读取文件 ，加载器是按照不同的规范严格执行的 。对于浏览器来说 ，它们的规范就
 是 HTML 规范规定的 。根据平台的不同加载器也各不相同 。  
-![img](https://hacks.mozilla.org/files/2018/03/07_loader_vs_es-768x439.png)
+![img](https://hacks.mozilla.org/files/2018/03/07_loader_vs_es-768x439.png)  
 The loader also controls exactly how the modules are loaded. It calls 
 the ES module methods — ParseModule, Module.Instantiate, and Module.
 Evaluate. It’s kind of like a puppeteer controlling the JS engine’s 
 strings.   
 加载器严格控制着模块如何加载 。称之为 ES 模块规范方法 — 模块的解析 、实例化和执行 。
 就像是木偶剧的演员用绳子操作木偶一样操控着 JS 引擎 。  
-![img](https://hacks.mozilla.org/files/2018/03/08_loader_as_puppeteer-768x507.png)
+![img](https://hacks.mozilla.org/files/2018/03/08_loader_as_puppeteer-768x507.png)  
 Now let’s walk through each step in more detail.  
 现在让我们对每个步骤进行更深入的了解 。  
 #### Construction  
@@ -248,7 +248,7 @@ First it needs to find the entry point file. In HTML, you tell the
 loader where to find it by using a script tag.  
 记载器会仔细的找到文件并且下载 。首先 ，需要找到入口文件 。 在HTML 文件中 ，加载器
 会通过 script 标签找到入口 。  
-![img](https://hacks.mozilla.org/files/2018/03/08_script_entry-768x288.png)
+![img](https://hacks.mozilla.org/files/2018/03/08_script_entry-768x288.png)  
 But how does it find the next bunch of modules — the modules that 
 main.js directly depends on?  
 但是它怎么找到入口文件依赖的其他的模块 。  
@@ -257,7 +257,7 @@ statement is called the module specifier. It tells the loader where
 it can find each next module.  
 这就是引用声明语句的来由 。引用声明的一部分称之为模块说明符 。它告诉加载器去哪里找
 到依赖的模块 。  
-![img](https://hacks.mozilla.org/files/2018/03/09_module_specifier-768x161.png)
+![img](https://hacks.mozilla.org/files/2018/03/09_module_specifier-768x161.png)  
 One thing to note about module specifiers: they sometimes need to be 
 handled differently between browsers and Node. Each host has its own 
 way of interpreting the module specifier strings. To do this, it uses 
@@ -281,14 +281,14 @@ parsing one file, then figuring out its dependencies, and then
 finding and loading those dependencies.  
 这就意味着 ，我们需要一层一层地 ，解析一个文件 ，然后分析出它的依赖 ，然后找到并
 下载这些依赖 。  
-![img](https://hacks.mozilla.org/files/2018/03/10_construction-768x464.png)
+![img](https://hacks.mozilla.org/files/2018/03/10_construction-768x464.png)  
 If the main thread were to wait for each of these files to download, 
 a lot of other tasks would pile up in its queue.  
 如果主线程在等待下载这些文件 ，那么堆栈中的其他任务将会被挂起 。  
 That’s because when you’re working in a browser, the downloading 
 part takes a long time.  
 这就是你在使用浏览器时 ，下载会占用很长的时间 。   
-![img](https://hacks.mozilla.org/files/2018/03/11_latency-768x415.png)
+![img](https://hacks.mozilla.org/files/2018/03/11_latency-768x415.png)  
 Based on this chart. Blocking the main thread like this would make 
 an app that uses modules too slow to use. This is one of the reasons 
 that the ES module spec splits the algorithm into multiple phases. 
@@ -313,7 +313,7 @@ CJS 模块规范之所以能够以不同的方式实现以上几步 ，是因为
 从网上加载文件快很多 。这意味着 ，Node 在加载文件时可以阻塞主线程 。加载完模块之
 后可以直接进行实例化 和执行操作（而不需要分多步完成）。同时意味着 ，在返回模
 块实例之前 ，是依次完成加载、实例化和执行操作 。  
-![img](https://hacks.mozilla.org/files/2018/03/12_cjs_require-768x457.png)
+![img](https://hacks.mozilla.org/files/2018/03/12_cjs_require-768x457.png)  
 The CommonJS approach has a few implications, and I will explain 
 more about those later. But one thing that it means is that in Node 
 with CommonJS modules, you can use variables in your module specifier. 
@@ -329,7 +329,7 @@ variables in your module specifiers, because those variables don’t
 have values yet.  
 但是在使用 ES 模块规范时 ，在做任何执行之前，你要构建出整个模块图表 。这就意
 味着 ，在模块说明符里还没有变量，因为那些变量都还没有值 。
-![img](https://hacks.mozilla.org/files/2018/03/13_static_import-768x225.png)
+![img](https://hacks.mozilla.org/files/2018/03/13_static_import-768x225.png)  
 But sometimes it is really useful to use variables for module 
 paths. For example, you might want to switch which module you 
 load depending on what the code is doing or what environment it i
@@ -346,7 +346,7 @@ handled as the entry point to a separate graph. The dynamically
 imported module starts a new graph, which is processed separately.  
 动态引用的实现就是使用 import ( ) 加载任意文件时 ，将其作为一个单独图表的
 入口点 。动态引用的模块生成一个单独的图表 ，这个过程时分开的 。  
-![img](https://hacks.mozilla.org/files/2018/03/14dynamic_import_graph-768x597.png)
+![img](https://hacks.mozilla.org/files/2018/03/14dynamic_import_graph-768x597.png)  
 One thing to note, though — any module that is in both of these 
 graphs is going to share a module instance. This is because the 
 loader caches module instances. For each module in a particular 
@@ -370,7 +370,7 @@ map and makes a note that it’s currently fetching the file. Then it
 will send out the request and move on to start fetching the next file.  
 当加载器想要获取一个 URL 时 ，就把这个 URL 放到模块地图里并做个标记 ，标注这个 
 URL 是正在获取的文件 。然后就发出请求 ，同时继续查找下一个依赖文件 。  
-![img](https://hacks.mozilla.org/files/2018/03/15_module_map-768x261.png)
+![img](https://hacks.mozilla.org/files/2018/03/15_module_map-768x261.png)  
 What happens if another module depends on the same file? The loader 
 will look up each URL in the module map. If it sees fetching in 
 there, it will just move on to the next URL.  
@@ -388,13 +388,13 @@ module record. This helps the browser understand what the different
 parts of the module are.  
 现在我们已经获取到这个模块了 ，我们需要解析它生成模块记录 。这有助于浏览器明白模块
 的不同的部分具体是什么 。  
-![img](https://hacks.mozilla.org/files/2018/03/25_file_to_module_record-768x306.png)
+![img](https://hacks.mozilla.org/files/2018/03/25_file_to_module_record-768x306.png)  
 Once the module record is created, it is placed in the module map. 
 This means that whenever it’s requested from here on out, the loader 
 can pull it from that map.  
 一旦模块记录创建成功，就被放到模块地图 。这就表明 ，无论何时 ，只要加载器需要这个
 模块 ，就可以从地图上取出来 。  
-![img](https://hacks.mozilla.org/files/2018/03/25_module_map-768x367.png)
+![img](https://hacks.mozilla.org/files/2018/03/25_module_map-768x367.png)  
 There is one detail in parsing that may seem trivial, but that 
 actually has pretty big implications. All modules are parsed as if 
 they had "use strict" at the top. There are also other slight 
@@ -417,7 +417,7 @@ that any imports are modules, too.
 浏览器端要区分文件类型是很简单的 。 你只要在 script 标签内将属性 “type” 设置为 
 “module” 就可以告诉浏览器将该文件作为模块去解析 。况且 ，只有模块才能被引入以后 ，
 浏览器也能明确知道引入的文件都是模块 。  
-![img](https://hacks.mozilla.org/files/2018/03/26_parse_goal-768x477.png)
+![img](https://hacks.mozilla.org/files/2018/03/26_parse_goal-768x477.png)  
 But in Node, you don’t use HTML tags, so you don’t have the option 
 of using a type attribute. One way the community has tried to solve 
 this is by using an .mjs extension. Using that extension tells Node, 
@@ -438,7 +438,7 @@ and parsed.
 And we’re done! At the end of the loading process, you’ve gone from 
 having just an entry point file to having a bunch of module records.  
 最终我们完成了解析！在加载过程的最后 ，将得到一个拥有一束模块记录的入口文件。  
-![img](https://hacks.mozilla.org/files/2018/03/27_construction-768x624.png)
+![img](https://hacks.mozilla.org/files/2018/03/27_construction-768x624.png)  
 The next step is to instantiate this module and link all of the 
 instances together.  
 下一步的工作就是实例化这个模块并且连结所有的实例 。  
@@ -470,7 +470,7 @@ anything else — and set up their exports.
 为了实例化模块图表 ，引擎会执行称之为一次深层次的第一次输出的遍历（a depth first 
 post-order traversal） 。这意味着它会沿着图表底层—到达底层的依赖，就是那些没有
 依赖其他模块的模块—然后设置它们的输出。  
-![img](https://hacks.mozilla.org/files/2018/03/30_live_bindings_01-768x316.png)
+![img](https://hacks.mozilla.org/files/2018/03/30_live_bindings_01-768x316.png)  
 The engine finishes wiring up all of the exports below a module — all 
 of the exports that the module depends on. Then it comes back up a 
 level to wire up the imports from that module.  
@@ -480,7 +480,7 @@ in memory. Wiring up the exports first guarantees that all of the
 imports can be connected to matching exports.  
 注意输出和引用的指向是内存中的同一个地址 。先连接输出是确保所有的引用能够连接到相
 匹配的输出 。  
-![img](https://hacks.mozilla.org/files/2018/03/30_live_bindings_02-768x316.png)
+![img](https://hacks.mozilla.org/files/2018/03/30_live_bindings_02-768x316.png)  
 This is different from CommonJS modules. In CommonJS, the entire 
 export object is copied on export. This means that any values (like 
 numbers) that are exported are copies.  
@@ -489,7 +489,7 @@ numbers) that are exported are copies.
 This means that if the exporting module changes that value later, the 
 importing module doesn’t see that change.  
 也就是说如果改变输出的值 ，引用该值的模块并不能相应的改变 。 
-![img](https://hacks.mozilla.org/files/2018/03/31_cjs_variable-768x174.png)
+![img](https://hacks.mozilla.org/files/2018/03/31_cjs_variable-768x174.png)  
 In contrast, ES modules use something called live bindings. Both 
 modules point to the same location in memory. This means that when the 
 exporting module changes a value, that change will show up in the 
@@ -502,7 +502,7 @@ said, if a module imports an object, it can change property values that
 are on that object.  
 输出该值的模块可以随时改变值 ，但是引用该值的模块时不能改变它们引用的值的 。
 话虽这么说 ，如果引用的是一个对象 ，也是可以改变对象的属性值的 。 
-![img](https://hacks.mozilla.org/files/2018/03/30_live_bindings_04-768x316.png)
+![img](https://hacks.mozilla.org/files/2018/03/30_live_bindings_04-768x316.png)  
 The reason to have live bindings like this is then you can wire up all 
 of the modules without running any code. This helps with evaluation 
 when you have cyclic dependencies, as I’ll explain below.  
@@ -524,7 +524,7 @@ Besides just filling in these boxes in memory, evaluating the
 code can also trigger side effects. For example, a module might 
 make a call to a server.  
 除了填充内存中的盒子 ，对执行代码也会触发副作用 。例如 ，模块可以与服务器通信 。  
-![img](https://hacks.mozilla.org/files/2018/03/40_top_level_code-768x224.png)
+![img](https://hacks.mozilla.org/files/2018/03/40_top_level_code-768x224.png)  
 Because of the potential for side effects, you only want to evaluate 
 the module once. As opposed to the linking that happens in 
 instantiation, which can be done multiple times with exactly the 
@@ -549,13 +549,13 @@ graph. Usually, this is a long loop. But to explain the
 problem, I’m going to use a contrived example with a short loop.  
 在互相依赖的模块中 ，图谱中将会以一个循环结束 。通常 ，是一个无限循环 。但为
 了解释这个问题 ，我会用一个小的循环的假例子进行解释 。  
-![img](https://hacks.mozilla.org/files/2018/03/41_cjs_cycle-768x344.png)
+![img](https://hacks.mozilla.org/files/2018/03/41_cjs_cycle-768x344.png)  
 Let’s look at how this would work with CommonJS modules. First, 
 the main module would execute up to the require statement. Then 
 it would go to load the counter module.  
 让我们看下在 CJS 模块规范中是如何实现的 。首先 ，main 模块将参照需求声
 明执行 。然后开始加载 counter 模块 。  
-![img](https://hacks.mozilla.org/files/2018/03/41_cyclic_graph-768x432.png)
+![img](https://hacks.mozilla.org/files/2018/03/41_cyclic_graph-768x432.png)  
 The counter module would then try to access message from the 
 export object. But since this hasn’t been evaluated in the 
 main module yet, this will return undefined. The JS engine 
@@ -564,7 +564,7 @@ the value to undefined.
 Counter 模块会尝试从输出的对象获取 message 变量 。但是因为代码还未在 
 main 模块评价(evaluated) ，这时会返回 undefined 。JS 引擎会在内存
 中为本地的变量分配空间并执行为 undefined 。  
-![img](https://hacks.mozilla.org/files/2018/03/42_cjs_variable_2-768x174.png)
+![img](https://hacks.mozilla.org/files/2018/03/42_cjs_variable_2-768x174.png)  
 Evaluation continues down to the end of the counter module’s 
 top level code. We want to see whether we’ll get the correct 
 value for message eventually (after main.js is evaluated), 
@@ -572,13 +572,13 @@ so we set up a timeout. Then evaluation resumes on main.js.
 执行过程继续沿着 counter 模块的高层次的代码直到末尾 。我们想看看最终能否
 得到正确的结果 (在执行 main.js 之后) ，所以我们设添加一个 setTimeout 。
 然后代码重新执行到 main.js 。  
-![img](https://hacks.mozilla.org/files/2018/03/43_cjs_cycle-768x344.png)
+![img](https://hacks.mozilla.org/files/2018/03/43_cjs_cycle-768x344.png)  
 The message variable will be initialized and added to memory. 
 But since there’s no connection between the two, it will stay 
 undefined in the required module.  
 Message 变量会被初始化并且添加到内存中， 但是在两者没有建立联系之前 ，这
 个变量在引入的模块中的状态一直是 undefined 。  
-![img](https://hacks.mozilla.org/files/2018/03/44_cjs_variable_2-768x331.png)
+![img](https://hacks.mozilla.org/files/2018/03/44_cjs_variable_2-768x331.png)  
 If the export were handled using live bindings, the counter 
 module would see the correct value eventually. By the time 
 the timeout runs, main.js’s evaluation would have completed 
