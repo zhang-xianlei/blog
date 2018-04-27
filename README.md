@@ -1,5 +1,5 @@
 ES modules: A cartoon deep-dive  
-通过漫画 ，深入了解 ES 模块 
+通过漫画 ，深入了解 ES 模块  
 本文引自 [Lin Clark](https://code-cartoons.com/) 的 [ES modules: A cartoon deep-dive](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/?utm_source=mybridge&utm_medium=blog&utm_campaign=read_more)  
 This ES modules bring an official,
 standardized module system to JavaScript. It took a while to get
