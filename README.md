@@ -4,7 +4,7 @@ ES modules: A cartoon deep-dive
 This ES modules bring an official,
 standardized module system to JavaScript. It took a while to get
 here, though — nearly 10 years of standardization work.  
-<font bgcolor=orange>ES 模块是的 js 官方的 、标准化的模块规范 ，模块规范的标准化历经了将近10年之久 。 </font>
+<font bgcolor=orange>ES 模块是的 js 官方的 、标准化的模块规范 ，模块规范的标准化历经了将近10年之久 。</font>  
 But the wait is almost over. With the release of Firefox 60 in May
 (currently in beta), all major browsers will support ES modules, 
 and the Node modules working group is currently working on adding
