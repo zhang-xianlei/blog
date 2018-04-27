@@ -28,6 +28,7 @@ numbers to variables, or combining two variables together and putting
 them into another variable.  
 当仔细想下 ，使用 JS 编码都是与处理变量相关 。为变量执行 ，或者为变量增加数值 ，
 再或者 ，合并两个变量并将两者执行给其他的变量 。  
+![img](https://hacks.mozilla.org/files/2018/03/01_variables-768x273.png)
 Because so much of your code is just about changing variables, how 
 you organize these variables is going to have a big impact on how
 well you can code… and how well you can maintain that code.  
@@ -39,6 +40,7 @@ Because of how scopes work in JavaScript, functions can’t access
 variables that are defined in other functions.  
 只有少量的变量需要同时去考虑能够让编码变得简单 。 Js 的作用域是一个解决办法 。
 也是因为作用域的工作机理 ，导致了方法之间不能获取到定义在其他方法的变量 。  
+![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_01-768x448.png)
 This is good. It means that when you’re working on one function, you 
 can just think about that one function. You don’t have to worry about 
 what other functions might be doing to your variables.  
@@ -56,6 +58,7 @@ load any jQuery plug-ins, you had to make sure that jQuery was in
 the global scope.  
 你应该还记得 jQuery 时代的实现方式 ，在你加载 jQuery 插件之前 ，你都要先确认 
 jQuery 在全局中引用 。  
+![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_02-768x691.png)
 This works, but they are some annoying problems that result.  
 这样做是行得通的 ，但是它们会带来很多麻烦 。  
 First, all of your script tags need to be in the right order. Then 
@@ -68,6 +71,7 @@ it expects it — on the global — and doesn’t find it, it will throw
 an error and stop executing.  
 如果搞混了顺序 ，在应用运行过程中 ，会报错 。当一个方法在它期望的地方想要查找 
 jQuery （例如全局） ，但是没有找到 ，它就会报错 ，并停止执行 。  
+![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_03-768x691.png)
 This makes maintaining code tricky. It makes removing old code or 
 script tags a game of roulette. You don’t know what might break. 
 The dependencies between these different parts of your code are 
@@ -107,6 +111,7 @@ export. Once you have an export, other modules can explicitly say
 that they depend on that variable, class or function.  
 使当前模块的对象能够在其他模块中使用 ，这种处理方式称为 export 。一旦模块有一个输
 出 ，其他的模块可以清晰的说明它们依赖输出中的对象 、类或者方法 。  
+![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_04-768x691.png)
 Because this is an explicit relationship, you can tell which modules 
 will break if you remove another one.  
 因为这种明确的依赖关系，所以当你删除某个模块时能够明确的知道哪些模块会崩溃。  
@@ -130,8 +135,8 @@ CommonJS 是 Node.js 曾经的模块规范 。ESM 是一种新的规范被添加
 语言规范中 。 浏览器都已经支持 ES 模块规范了 ，并且 Node 正在支持这种规范。  
 Let’s take an in-depth look at how this new module system works.  
 让我们深入了解这种规范是如何工作的 。  
-How ES modules work ES  
-模块规范如何使用  
+How ES modules work   
+ES 模块规范如何使用  
 When you’re developing with modules, you build up a graph of 
 dependencies. The connections between different dependencies come 
 from any import statements that you use.  
@@ -143,12 +148,14 @@ point to the graph. From there it just follows any of the import
 statements to find the rest of the code.  
 这些依赖声明使得浏览器或者 Node 准确的加载资源 。 你可以建一个文件作为依赖图谱的
 入口 ，通过跟踪入口文件的任何一个引入声明找到相关的代码 。  
+![img](https://hacks.mozilla.org/files/2018/03/04_import_graph-768x447.png)
 But files themselves aren’t something that the browser can use. It 
 needs to parse all of these files to turn them into data structures 
 called Module Records. That way, it actually knows what’s going on 
 in the file.  
 浏览器并不能直接使用这些文件 ，需要解析所有的文件生成一个称为模块记录的数据结构 。
-通过这种方式 ，浏览器才能知道文件的功能。  
+通过这种方式 ，浏览器才能知道文件的功能。 
+![img](https://hacks.mozilla.org/files/2018/03/05_module_record-768x441.png)
 After that, the module record needs to be turned into a module 
 instance. An instance combines two things: the code and state.  
 除此之外 ， 模块记录需要转变成一个模块实例 。一个实例由两种事物组成 ： 代码和状态 。  
