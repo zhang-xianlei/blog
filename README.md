@@ -364,7 +364,7 @@ we’ll see next.
 但是模块地图不仅仅是对已加载的文件做跟踪记录 。其实 ，模块地图对相应的模块也做了
 缓存 ，下文我们将看到 。 
 #### Parsing 
-####解析  
+#### 解析  
 Now that we have fetched this file, we need to parse it into a 
 module record. This helps the browser understand what the different 
 parts of the module are.  
