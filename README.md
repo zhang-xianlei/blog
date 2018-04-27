@@ -1,8 +1,7 @@
 ES modules: A cartoon deep-dive  
-通过漫画 ，深入了解 ES 模块
-
-By Lin Clark Posted on March 28, 2018 in Code Cartoons, Featured 
-Article, and JavaScript Share This ES modules bring an official,
+通过漫画 ，深入了解 ES 模块 
+本文引自 [Lin Clark](https://code-cartoons.com/) 的 [ES modules: A cartoon deep-dive](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/?utm_source=mybridge&utm_medium=blog&utm_campaign=read_more)  
+This ES modules bring an official,
 standardized module system to JavaScript. It took a while to get
 here, though — nearly 10 years of standardization work.  
 ES 模块是的 js 官方的 、标准化的模块规范 ，模块规范的标准化历经了将近10年之久 。  
