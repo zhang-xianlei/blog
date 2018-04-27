@@ -38,8 +38,8 @@ Having just a few variables to think about at one time makes things
 easier. JavaScript has a way of helping you do this, called scope. 
 Because of how scopes work in JavaScript, functions can’t access 
 variables that are defined in other functions.  
-只有少量的变量需要同时去考虑能够让编码变得简单 。 Js 的作用域是一个解决办法 。
-也是因为作用域的工作机理 ，导致了方法之间不能获取到定义在其他方法的变量 。  
+`只有少量的变量需要同时去考虑能够让编码变得简单 。 Js 的作用域是一个解决办法 。
+也是因为作用域的工作机理 ，导致了方法之间不能获取到定义在其他方法的变量 。`  
 ![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_01-768x448.png)  
 This is good. It means that when you’re working on one function, you 
 can just think about that one function. You don’t have to worry about 
@@ -63,8 +63,8 @@ This works, but they are some annoying problems that result.
 这样做是行得通的 ，但是它们会带来很多麻烦 。  
 First, all of your script tags need to be in the right order. Then 
 you have to be careful to make sure that no one messes up that order.
-第一 ， 必须将所有的 script 标签正确的排序 ，然后你还必须小心翼翼的确保没有一个搞
-混顺序 。  
+`第一 ， 必须将所有的 script 标签正确的排序 ，然后你还必须小心翼翼的确保没有一个搞
+混顺序 。`  
 If you do mess up that order, then in the middle of running, your app 
 will throw an error. When the function goes looking for jQuery where 
 it expects it — on the global — and doesn’t find it, it will throw 
@@ -86,9 +86,9 @@ can change the variable. Malicious code can change that variable
 on purpose to make your code do something you didn’t mean for it 
 to, or non-malicious code could just accidentally clobber your 
 variable.  
-第二个问题是因为这些变量都是暴露在全局 ，所以全局下的各个部分的代码都可以改变变量
+`第二个问题是因为这些变量都是暴露在全局 ，所以全局下的各个部分的代码都可以改变变量
 的值 。恶意代码会有目的的改变你的代码使之不按预定的目标执行 ，或者非恶意的代码很
-可能会重新定义你的变量 。  
+可能会重新定义你的变量 。`  
 How do modules help?  
 模块能做什么 ？  
 Modules give you a better way to organize these variables and 
@@ -114,7 +114,7 @@ that they depend on that variable, class or function.
 ![img](https://hacks.mozilla.org/files/2018/03/02_module_scope_04-768x691.png)  
 Because this is an explicit relationship, you can tell which modules 
 will break if you remove another one.  
-因为这种明确的依赖关系，所以当你删除某个模块时能够明确的知道哪些模块会崩溃。  
+`因为这种明确的依赖关系，所以当你删除某个模块时能够明确的知道哪些模块会崩溃。`  
 Once you have the ability to export and import variables between 
 modules, it makes it a lot easier to break up your code into small 
 chunks that can work independently of each other. Then you can 
@@ -130,9 +130,9 @@ systems that are actively being used. CommonJS (CJS) is what Node.js
 has used historically. ESM (EcmaScript modules) is a newer system 
 which has been added to the JavaScript specification. Browsers 
 already support ES modules, and Node is  adding support.  
-因为模块很有用 ，曾经有多种尝试给 JS 添加模块规范 。目前比较常用的模块规范有两种 ，
+`因为模块很有用 ，曾经有多种尝试给 JS 添加模块规范 。目前比较常用的模块规范有两种 ，
 CommonJS 是 Node.js 曾经的模块规范 。ESM 是一种新的规范被添加到 JavaScript 
-语言规范中 。 浏览器都已经支持 ES 模块规范了 ，并且 Node 正在支持这种规范。  
+语言规范中 。 浏览器都已经支持 ES 模块规范了 ，并且 Node 正在支持这种规范。`  
 Let’s take an in-depth look at how this new module system works.  
 让我们深入了解这种规范是如何工作的 。  
 How ES modules work   
