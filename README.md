@@ -1,301 +1,140 @@
-ES modules: A cartoon deep-dive   
+ES modules: A cartoon deep-dive  
 通过漫画 ，深入了解 ES 模块
 
-By Lin Clark
-Posted on March 28, 2018 in Code Cartoons, Featured Article, and JavaScript 
-Share This
-ES modules bring an official, standardized module system to JavaScript. It took a while to get here, though — nearly 10 years of standardization work.  
-ES 模块是的 js 官方的 、标准化的模块规范 ，模块规范的标准化历经了将近10年之久 。
-
-But the wait is almost over. With the release of Firefox 60 in May (currently in beta), all major browsers will support ES modules, and the Node modules working group is currently working on adding ES module support to Node.js. And ES module integration for WebAssembly is underway as well.  
-不过 ，这个等待即将结束 。伴随着5月份火狐浏览器 60 版本的发布 ，主流的浏览器都将支持 ES 模块 ，并且 Node 模块工作组 ，目前正在增加 ES 模块的支持 。WebAssembly 集成 ES 模块的工作也在进行中 。  
-Many JavaScript developers know that ES modules have been controversial. But few actually understand how ES modules work.  
-大多数 js 开发者知道 ES 模块是有争议的 。但是很少能够真正的明白 ES 模块是如何工作的 。  
-Let’s take a look at what problem ES modules solve and how they are different from modules in other module systems.  
+By Lin Clark Posted on March 28, 2018 in Code Cartoons, Featured 
+Article, and JavaScript Share This ES modules bring an official,
+standardized module system to JavaScript. It took a while to get
+here, though — nearly 10 years of standardization work.  
+ES 模块是的 js 官方的 、标准化的模块规范 ，模块规范的标准化历经了将近10年之久 。  
+But the wait is almost over. With the release of Firefox 60 in May
+(currently in beta), all major browsers will support ES modules, 
+and the Node modules working group is currently working on adding
+ES module support to Node.js. And ES module integration for
+WebAssembly is underway as well.  
+不过 ，这个等待即将结束 。伴随着5月份火狐浏览器 60 版本的发布 ，主流的浏览器都将
+支持 ES 模块 ，并且 Node 模块工作组 ，目前正在增加 ES 模块的支持 。
+WebAssembly 集成 ES 模块的工作也在进行中 。  
+Many JavaScript developers know that ES modules have been
+ controversial. But few actually understand how ES modules work.  
+大多数 js 开发者知道 ES 模块是有争议的 。但是很少能够真正的明白 ES 模块是如何
+工作的 。  
+Let’s take a look at what problem ES modules solve and how they 
+are different from modules in other module systems.  
 让我们看一下 ES 模块解决哪些问题 ，以及它们与其他模块规范的模块有何不同 。  
-What problem do modules solve?  
+What problem do modules solve?  
 解决什么问题  
-When you think about it, coding in JavaScript is all about managing variables. It’s all about assigning values to variables, or adding numbers to variables, or combining two variables together and putting them into another variable.  
-当仔细想下 ，使用 JS 编码都是与处理变量相关 。为变量赋值 ，或者为变量增加数值 ，再或者 ，合并两个变量并将两者赋值给其他的变量 。  
-Because so much of your code is just about changing variables, how you organize these variables is going to have a big impact on how well you can code… and how well you can maintain that code.   
-因为你大部分的代码就只是在处理变量 ，所以如何组织这些变量将会在你如何更好的编码 ，以及如何更好的组织代码有很大的影响 。  
-Having just a few variables to think about at one time makes things easier. JavaScript has a way of helping you do this, called scope. Because of how scopes work in JavaScript, functions can’t access variables that are defined in other functions.   
-只有少量的变量需要同时去考虑能够让编码变得简单 。 Js 的作用域是一个解决办法 。也是因为作用域的工作机理 ，导致了方法之间不能获取到定义在其他方法的变量 。    
-This is good. It means that when you’re working on one function, you can just think about that one function. You don’t have to worry about what other functions might be doing to your variables.  
+When you think about it, coding in JavaScript is all about managing 
+variables. It’s all about assigning values to variables, or adding
+numbers to variables, or combining two variables together and putting 
+them into another variable.  
+当仔细想下 ，使用 JS 编码都是与处理变量相关 。为变量赋值 ，或者为变量增加数值 ，
+再或者 ，合并两个变量并将两者赋值给其他的变量 。  
+Because so much of your code is just about changing variables, how 
+you organize these variables is going to have a big impact on how
+well you can code… and how well you can maintain that code.  
+因为你大部分的代码就只是在处理变量 ，所以如何组织这些变量将会在你如何更好的编码 ，
+以及如何更好的组织代码有很大的影响 。  
+Having just a few variables to think about at one time makes things 
+easier. JavaScript has a way of helping you do this, called scope. 
+Because of how scopes work in JavaScript, functions can’t access 
+variables that are defined in other functions.  
+只有少量的变量需要同时去考虑能够让编码变得简单 。 Js 的作用域是一个解决办法 。
+也是因为作用域的工作机理 ，导致了方法之间不能获取到定义在其他方法的变量 。  
+This is good. It means that when you’re working on one function, you 
+can just think about that one function. You don’t have to worry about 
+what other functions might be doing to your variables.  
 这样处理的好处是 ，当你编写当前方法时 ，不需要担心其他的方法对你的变量有影响 。  
-It also has a downside, though. It does make it hard to share variables between different functions.  
+It also has a downside, though. It does make it hard to share 
+variables between different functions.  
 当然 ，也有不利的一面 。这样使得不同方法之间共享变量变得很难 。  
-What if you do want to share your variable outside of a scope? A common way to handle this is to put it on a scope above you… for example, on the global scope.  
-如果想暴露出当前作用域的变量 ，一般的处理方式就是在上层作用域定义变量 ，比如在全局中定义变量 。  
-You probably remember this from the jQuery days. Before you could load any jQuery plug-ins, you had to make sure that jQuery was in the global scope.  
-你应该还记得 jQuery 时代的实现方式 ，在你加载 jQuery 插件之前 ，你都要先确认 jQuery 在全局中引用 。  
+What if you do want to share your variable outside of a scope? A 
+common way to handle this is to put it on a scope above you… for 
+example, on the global scope.  
+如果想暴露出当前作用域的变量 ，一般的处理方式就是在上层作用域定义变量 ，比如在全局
+中定义变量 。  
+You probably remember this from the jQuery days. Before you could 
+load any jQuery plug-ins, you had to make sure that jQuery was in 
+the global scope.  
+你应该还记得 jQuery 时代的实现方式 ，在你加载 jQuery 插件之前 ，你都要先确认 
+jQuery 在全局中引用 。  
 This works, but they are some annoying problems that result.  
 这样做是行得通的 ，但是它们会带来很多麻烦 。  
-First, all of your script tags need to be in the right order. Then you have to be careful to make sure that no one messes up that order.  
-第一 ， 必须将所有的 script 标签正确的排序 ，然后你还必须小心翼翼的确保没有一个搞混顺序 。  
-If you do mess up that order, then in the middle of running, your app will throw an error. When the function goes looking for jQuery where it expects it — on the global — and doesn’t find it, it will throw an error and stop executing.  
-如果搞混了顺序 ，在应用运行过程中 ，会报错 。当一个方法在它期望的地方想要查找 jQuery （例如全局） ，但是没有找到 ，它就会报错 ，并停止执行 。  
-This makes maintaining code tricky. It makes removing old code or script tags a game of roulette. You don’t know what might break. The dependencies between these different parts of your code are implicit. Any function can grab anything on the global, so you don’t know which functions depend on which scripts.  
-这样的后果 ，就是在处理代码时要谨小慎微 。使得删除老代码或者 script 标签就像是在玩轮盘赌 。你不知道什么会崩溃 。不同代码之间的相互依赖含糊不清 。任意方法都能获取到全局中的任何对象 ，所以你搞不清方法依赖哪个脚本 。  
-A second problem is that because these variables are on the global scope, every part of the code that’s inside of that global scope can change the variable. Malicious code can change that variable on purpose to make your code do something you didn’t mean for it to, or non-malicious code could just accidentally clobber your variable.  
-第二个问题是因为这些变量都是暴露在全局 ，所以全局下的各个部分的代码都可以改变变量的值 。恶意代码会有目的的改变你的代码使之不按预定的目标执行 ，或者非恶意的代码很可能会重新定义你的变量 。  
-How do modules help?
-模块能做什么？
-Modules give you a better way to organize these variables and functions. With modules, you group the variables and functions that make sense to go together.
-模块可以让你更好的组织这些变量和方法 。使用模块 ，你可以把具有一定意义的对象和方法组织在一起 。
-This puts these functions and variables into a module scope. The module scope can be used to share variables between the functions in the module.
-将方法和对象放到一个模块里 ，模块里的方法可以共享这个模块作用域的变量 。
-But unlike function scopes, module scopes have a way of making their variables available to other modules as well. They can say explicitly which of the variables, classes, or functions in the module should be available.
-但与方法的作用域不同 ，模块的作用域有一种方式能够使它的变量能够在其他的模块中使用 ，并且能够精确地设置特定变量  、类或者方法 。
-When something is made available to other modules, it’s called an export. Once you have an export, other modules can explicitly say that they depend on that variable, class or function.
-使当前模块的对象能够在其他模块中使用 ，这种处理方式称之为输出。一旦模块有一个输出 ，其他的模块可以清晰的说明它们依赖输出中的对象 、类或者方法 。
-
-
-
-Because this is an explicit relationship, you can tell which modules will break if you remove another one.
-因为这种明确的依赖关系，所以当你删除某个模块时能够明确的知道哪些模块会崩溃。
-Once you have the ability to export and import variables between modules, it makes it a lot easier to break up your code into small chunks that can work independently of each other. Then you can combine and recombine these chunks, kind of like Lego blocks, to create all different kinds of applications from the same set of modules.
-一旦 ，能够在不同的模块之间输出 、引用变量，将代码拆分成能够独立运行的小块会变得轻而易举 。那时你就可以使代码像乐高积木一样 ，任意的组织这些模块 ，去实现不同功能的应用。
-Since modules are so useful, there have been multiple attempts to add module functionality to JavaScript. Today there are two module systems that are actively being used. CommonJS (CJS) is what Node.js has used historically. ESM (EcmaScript modules) is a newer system which has been added to the JavaScript specification. Browsers already support ES modules, and Node is  adding support.
-因为模块很有用 ，曾经有多种尝试给 JS 添加模块规范 。目前比较常用的模块规范有两种 ，CommonJS 是 Node.js 曾经的模块规范 。ESM 是一种新的规范被添加到 JavaScript 语言规范中 。 浏览器都已经支持 ES 模块规范了 ，并且 Node 正在支持这种规范。
-Let’s take an in-depth look at how this new module system works.
-让我们深入了解这种规范是如何使用的 。
-How ES modules work
-ES 模块规范如何使用
-When you’re developing with modules, you build up a graph of dependencies. The connections between different dependencies come from any import statements that you use.
-当你使用模块进行开发时 ，将会构建一个依赖的图标 。不同依赖之间的联系都依赖于你使用的依赖说明 。
-These import statements are how the browser or Node knows exactly what code it needs to load. You give it a file to use as an entry point to the graph. From there it just follows any of the import statements to find the rest of the code.
-这些依赖声明使得浏览器或者 Node 准确的加载资源 。  你可以建一个文件作为依赖图标的入口 ，通过跟踪入口文件的任何一个引入声明找到相关的代码 。
-
-
-
-
-
-
-
-
-But files themselves aren’t something that the browser can use. It needs to parse all of these files to turn them into data structures called Module Records. That way, it actually knows what’s going on in the file.
-浏览器并不能直接使用这些文件 ，需要解析所有的文件生成一个称为模块记录的数据结构 。通过这种方式 ，浏览器才能知道文件的功能。
-
-
-After that, the module record needs to be turned into a module instance. An instance combines two things: the code and state.
-除此之外 ， 模块记录需要转变成一个模块实例 。一个实例由两种事物组成 ： 代码和状态 。
-The code is basically a set of instructions. It’s like a recipe for how to make something. But by itself, you can’t use the code to do anything. You need raw materials to use with those instructions.
-代码基本上就是一组的指令 ，就像是一个处理事情的规则 。但是仅凭借单独的代码，你不能完成任何事情 ，只是以这些指令为原生代码。
-What is state? State gives you those raw materials. State is the actual values of the variables at any point in time. Of course, these variables are just nicknames for the boxes in memory that hold the values.
-什么是状态 ？状态给你一些原生代码 ，状态是任意时间点变量的值 。当然 ，提到的变量就是存储在内存盒子中值的相应昵称 。
-So the module instance combines the code (the list of instructions) with the state (all the variables’ values).
-所以得出 ，模块实例是代码（一些列的指令）和状态（所有变量的值）的组合 。
-
-
-
-What we need is a module instance for each module. The process of module loading is going from this entry point file to having a full graph of module instances 。
-我们需要的就是每个模块的实例 。模块加载的过程就是依据入口文件去加载整个依赖图表的模块的实例。
-For ES modules, this happens in three steps.
-对于 ES 模块规范来说 ，实现加载分为三个步骤 。
-Construction — find, download, and parse all of the files into module records.
-Instantiation —find boxes in memory to place all of the exported values in (but don’t fill them in with values yet). Then make both exports and imports point to those boxes in memory. This is called linking.
-Evaluation —run the code to fill in the boxes with the variables’ actual values.
-
-  1. 结构化—查找、下载和解析所有模块记录的文件。
-  2. 实例化—找到内存中的盒子用输出的值去占位（但是并不赋    值）。然后将输出和引入只想内存中的盒子，这个过程称为连结。
-  3. 赋值 —执行代码，用真实的值填充到相应的盒子。
-
-
-
-People talk about ES modules being asynchronous. You can think about it as asynchronous because the work is split into these three different phases — loading, instantiating, and evaluating — and those phases can be done separately.
-大家认为 ES 模块规范是个异步的过程 。你可以这么认为 ，因为它是分三步实现的—加载、实例化和赋值—并且这三步可以单独完成  。
-This means the spec does introduce a kind of asynchrony that wasn’t there in CommonJS. I’ll explain more later, but in CJS a module and the dependencies below it are loaded, instantiated, and evaluated all at once, without any breaks in between.
-这意味着 CommonJS 的文档中没有提及到异步实现的过程 。这个稍后解释。不过在 CJS 中 ，模块自身以及依赖的模块的加载、实例化以及赋值过程是连续的，中间没有断开。
-However, the steps themselves are not necessarily asynchronous. They can be done in a synchronous way. It depends on what’s doing the loading. That’s because not everything is controlled by the ES module spec. There are actually two halves of the work, which are covered by different specs.
-但是 ，这些步骤本没有必要异步执行 ，可以采用同步实现的方式完成 。主要取决于加载的时候做什么 ，并不是所有的事情都是 ES 模块规范文档左右的 。其实两种实现是一样的 ，只是规范文档不同 。
-The ES module spec says how you should parse files into module records, and how you should instantiate and evaluate that module. However, it doesn’t say how to get the files in the first place.
-ES 模块规范文档里介绍了如何解析文件到模块记录中，如何实例化和赋值模块 。然而 ，并没有介绍首先如何获取文件 。
-It’s the loader that fetches the files. And the loader is specified in a different specification. For browsers, that spec is the HTML spec. But you can have different loaders based on what platform you are using.
-是加载器读取文件 ，加载器是按照不同的规范严格执行的 。对于浏览器来说 ，它们的规范就是 HTML 规范规定的 。根据平台的不同加载器也各不相同 。
-
-
-The loader also controls exactly how the modules are loaded. It calls the ES module methods — ParseModule, Module.Instantiate, and Module.Evaluate. It’s kind of like a puppeteer controlling the JS engine’s strings.
-加载器严格控制着模块如何加载 。称之为 ES 模块规范方法 — 模块的解析 、实例化和赋值 。就像是木偶剧的演员用绳子操作木偶一样操控着 JS 引擎 。
-
-
-
-
-
-Now let’s walk through each step in more detail.
-现在让我们对每个步骤进行更深入的了解 。
-Construction
-结构化
-Three things happen for each module during the Construction phase.
-Figure out where to download the file containing the module from (aka module resolution)
-Fetch the file (by downloading it from a URL or loading it from the file system)
-Parse the file into a module record
-
-每个模块的结构化要经历三个步骤 。
-分析包含的模块的下载地址（又称之为模块解析）。
-下载文件（从具体的网址下载或者从文件系统中下载）。
-分析文件并加到模块记录中 。
-Finding the file and fetching it
-找到文件并且获取它
-The loader will take care of finding the file and downloading it. First it needs to find the entry point file. In HTML, you tell the loader where to find it by using a script tag.
-记载器会仔细的找到文件并且下载 。首先 ，需要找到入口文件 。 在HTML 文件中 ，加载器会通过 script 标签找到入口 。
-
-
-
-But how does it find the next bunch of modules — the modules that main.jsdirectly depends on?
-但是它怎么找到入口文件依赖的其他的模块 。
-This is where import statements come in. One part of the import statement is called the module specifier. It tells the loader where it can find each next module.
-这就是引用声明语句的来由 。引用声明的一部分称之为模块说明符 。它告诉加载器去哪里找到依赖的模块 。
-
-
-One thing to note about module specifiers: they sometimes need to be handled differently between browsers and Node. Each host has its own way of interpreting the module specifier strings. To do this, it uses something called a module resolution algorithm, which differs between platforms. Currently, some module specifiers that work in Node won’t work in the browser, but there is ongoing work to fix this.
-关于模块说明符有一点要强调下 ：有时候浏览器 和  Node 的处理方式不同 。每个终端解析模块说明符有自己方式 。 为了解析模块 ，会用到称之为模块解析算法的东西 ，不同的平台算法是不一样的 。目前 有些模块说明符在 Node 中可以正常运行，但是在浏览器中会挂掉 ，但是这个问题正在修复 。
-
-Until that’s fixed, browsers only accept URLs as module specifiers. They will load the module file from that URL. But that doesn’t happen for the whole graph at the same time. You don’t know what dependencies the module needs you to fetch until you’ve parsed the file… and you can’t parse the file until you fetched it.
-修复之前，浏览器只能接受 URL 作为模块说明符。它们通过 URL 加载模块文件 。但是整个依赖图标并不能在同一时间加载 。因为你在解析文件之前 ，并不知道依赖哪些模块…况且在你获取文件之前是不能解析它的 。
-This means that we have to go through the tree layer-by-layer, parsing one file, then figuring out its dependencies, and then finding and loading those dependencies.
-这就意味着 ，我们需要一层一层地 ，解析一个文件 ，然后分析出它的依赖 ，然后找到并下载这些依赖 。
-If the main thread were to wait for each of these files to download, a lot of other tasks would pile up in its queue.
-如果主线程在等待下载这些文件 ，那么堆栈中的其他任务将会被挂起 。
-That’s because when you’re working in a browser, the downloading part takes a long time.
-这就是你在使用浏览器时 ，下载会占用很长的时间 。
- 
-
-
-
-
-
-
-Based on this chart.
-Blocking the main thread like this would make an app that uses modules too slow to use. This is one of the reasons that the ES module spec splits the algorithm into multiple phases. Splitting out construction into its own phase allows browsers to fetch files and build up their understanding of the module graph before getting down to the synchronous work of instantiating.
-像这样阻塞主线程会使得应用在使用模块时变得很慢以至于不能正常工作 。这是 ES 模块规范将模块解析算法分成多个步骤完成的原因之一 。结构化分离成单独的一部分 ，允许浏览器在实例化之前提取文件并构建出它们能解析的模块图标 。
-This approach—having the algorithm split up into phases—is one of the key differences between ES modules and CommonJS modules.
-将模块解析算法分成多个部分的方法是 ES 模块规范和 CJS 模块规范的一个重要区别 。
-CommonJS can do things differently because loading files from the filesystem takes much less time than downloading across the Internet. This means Node can block the main thread while it loads the file. And since the file is already loaded, it makes sense to just instantiate and evaluate (which aren’t separate phases in CommonJS). This also means that you’re walking down the whole tree, loading, instantiating, and evaluating any dependencies before you return the module instance.
-CJS 模块规范之所以能够以不同的方式实现以上几步 ，是因为从文件系统中加载文件比从网上加载文件快很多 。这意味着 ，Node 在加载文件时可以阻塞主线程 。加载完模块之后可以直接进行实例化 和赋值操作（而不需要分多步完成）。同时意味着 ，在返回模块实例之前 ，是依次完成加载、实例化和赋值操作 。
-
-
-
-
-The CommonJS approach has a few implications, and I will explain more about those later. But one thing that it means is that in Node with CommonJS modules, you can use variables in your module specifier. You are executing all of the code in this module (up to the require statement) before you look for the next module. That means the variable will have a value when you go to do module resolution.
-CJS 规范的实现方式有一些影响 ，我将稍后解释 。它的实现方式也就意味着，你可以在模块说明符中使用变量 。在查找下一个模块之前 ，你可以执行当前模块所有的代码（由 require 声明决定）
-But with ES modules, you’re building up this whole module graph beforehand… before you do any evaluation. This means you can’t have variables in your module specifiers, because those variables don’t have values yet.
-但是在使用 ES 模块规范时 ，在做任何赋值之前，你要构建出整个模块图表 。这就意味着 ，在模块说明符里还没有变量，因为那些变量都还没有值。
-
-
-
-But sometimes it is really useful to use variables for module paths. For example, you might want to switch which module you load depending on what the code is doing or what environment it is running in.
-但是有时候在模块路径中使用变量确实很实用 ，例如 ，可以依据代码的功能或者运行的环境切换依赖的模块 。
-To make this possible for ES modules, there’s a proposal called dynamic import. With it, you can use an import statement like import(`${path}/foo.js`).
-ES 模块规范现在有个动态引用的提议，去实现以上功能 。有了它 ，就可以像这样  import(`${path}/foo.js`)使用引用声明了 。
-The way this works is that any file loaded using import() is handled as the entry point to a separate graph. The dynamically imported module starts a new graph, which is processed separately.
-动态引用的实现就是使用 import ( ) 加载任意文件时 ，将其作为一个单独图表的入口点 。动态引用的模块生成一个单独的图表 ，这个过程时分开的 。
-
-
-
-One thing to note, though — any module that is in both of these graphs is going to share a module instance. This is because the loader caches module instances. For each module in a particular global scope, there will only be one module instance.
-有一点要注意 ，即使任意模块会出现在两个图标中 ，但其实他们只是共享了一个模块 。这是因为加载器对这些模块都有缓存 。对于每个模块来时 ，他们会存在一个特殊的全局范围 ，但其实还是只有一个实体 。
-This means less work for the engine. For example, it means that the module file will only be fetched once even if multiple modules depend on it. (That’s one reason to cache modules. We’ll see another in the evaluation section.)
-这也就意味着减轻引擎的工作 。例如 ，这意味着 ，即使多个模块依赖一个模块 ，被依赖的模块也只需要获取一次 。（这是缓存模块的一个原因 ，到下面赋值的部分 ，我们会讲到另一个原因）。
-The loader manages this cache using something called a module map. Each global keeps track of its modules in a separate module map.
-加载器使用称之为模块地图的东西去管理模块的缓存 。每一个全局作用域会使用单独的模块地图去记录它的模块 。
-When the loader goes to fetch a URL, it puts that URL in the module map and makes a note that it’s currently fetching the file. Then it will send out the request and move on to start fetching the next file.
-当加载器想要获取一个 URL 时 ，就把这个 URL 放到模块地图里并做个标记 ，标注这个 URL 是正在获取的文件 。然后就发出请求 ，同时继续查找下一个依赖文件 。
-
-
-What happens if another module depends on the same file? The loader will look up each URL in the module map. If it sees fetching in there, it will just move on to the next URL.
-当其他的模块也依赖这个文件会发生什么呢 ？加载器会在模块地图中查询 ，如果发现有相同的 URL 被标记成正在接受状态 ，加载器会继续查找下一个文件 。
-But the module map doesn’t just keep track of what files are being fetched. The module map also serves as a cache for the modules, as we’ll see next.
-但是模块地图并没有对已经加载的文件做跟踪记录 。其实 ，模块地图对相应的模块也做了缓存 ，下文我们将看到 。
-Parsing
-解析
-Now that we have fetched this file, we need to parse it into a module record. This helps the browser understand what the different parts of the module are.
-现在我们已经获取到这个模块了 ，我们需要解析它生成模块记录 。这有助于浏览器明白模块的不同的部分具体是什么 。
-
-Once the module record is created, it is placed in the module map. This means that whenever it’s requested from here on out, the loader can pull it from that map.
-
-
-一旦模块记录创建成功，就被放到模块地图 。这就表明 ，无论何时 ，只要加载器需要这个模块 ，就可以从地图上取出来 。
-
-There is one detail in parsing that may seem trivial, but that actually has pretty big implications. All modules are parsed as if they had "use strict" at the top. There are also other slight differences. For example, the keyword await is reserved in a module’s top-level code, and the value of this is undefined.
-解析过程中的这个细节看起来有点多余 ，但其实真的有很大的影响 。所有的模块在解析过程中都默认为 “严格模式” 。这其实是有些差别的 ：例如 ，关键字 await 在模块的顶层代码中是保留字(reserved) ，还有 this 的值是 undefined 。
-This different way of parsing is called a “parse goal”. If you parse the same file but use different goals, you’ll end up with different results. So you want to know before you start parsing what kind of file you’re parsing — whether it’s a module or not.
-这种不同的解析方式称为“解析目标”（parse goal）。如果你用不同的解析目标解析同一个文件 ，你会得到不同的结果 。所以在解析文件之前，加载器要知道解析的文件是什么类型—是模块还是其他的 。
-In browsers this is pretty easy. You just put type="module" on the script tag. This tells the browser that this file should be parsed as a module. And since only modules can be imported, the browser knows that any imports are modules, too.
-浏览器端要区分文件类型是很简单的 。 你只要在 script 标签内将属性 “type” 设置为 “module” 就可以告诉浏览器将该文件作为模块去解析 。况且 ，只有模块才能被引入以后 ，浏览器也能明确知道引入的文件都是模块 。
-
-
-But in Node, you don’t use HTML tags, so you don’t have the option of using a type attribute. One way the community has tried to solve this is by using an .mjs extension. Using that extension tells Node, “this file is a module”. You’ll see people talking about this as the signal for the parse goal. The discussion is currently ongoing, so it’s unclear what signal the Node community will decide to use in the end.
-但是在 Node 环境中 ，不能使用 HTML 标签 ，所以你不能使用 type 属性去标注文件为模块类型 。社区中已经想到了一种解决办法 ，使用  “.mjs” 扩展类型 ，告诉 Node 该文件是模块 。 在社区中 ，你或许听到过大家讨论过为解析目标设置这种标记 。这样的讨论现在还在持续 ，所以 Node 社区目前还没有决定使用哪种标记作为解析目标。
-Either way, the loader will determine whether to parse the file as a module or not. If it is a module and there are imports, it will then start the process over again until all of the files are fetched and parsed.
-总之 ，加载器需要去定分析的文件是不是模块 。如果是模块并且模块有很多引用 ，将继续一遍一遍地执行解析过程直到获取并解析所有的文件 。
-And we’re done! At the end of the loading process, you’ve gone from having just an entry point file to having a bunch of module records.
-最终我们完成了解析！在加载过程的最后 ，将得到一个拥有一束模块记录的入口文件。
-The next step is to instantiate this module and link all of the instances together.
-下一步的工作就是实例化这个模块并且连结所有的实例 。
-Instantiation
-实例化
-Like I mentioned before, an instance combines code with state. That state lives in memory, so the instantiation step is all about wiring things up to memory.
-就像我前面提到的 ，一个实例包括代码和状态 。而状态是存储在内存中的 ，所以实例化的过程都是关于连接内存 。
-First, the JS engine creates a module environment record. This manages the variables for the module record. Then it finds boxes in memory for all of the exports. The module environment record will keep track of which box in memory is associated with each export.
-首先，JS 引擎创建一个模块环境记录（module environment record） 。这个环境记录中控制着模块记录的变量（module record）。接着它会找到内存存放所有输出的盒子 ，并且跟踪记录内存盒子相关联的输出 。
-These boxes in memory won’t get their values yet. It’s only after evaluation that their actual values will be filled in. There is one caveat to this rule: any exported function declarations are initialized during this phase. This makes things easier for evaluation.
-这些内存中盒子并没有获取到相应的值 。只有到赋值（evaluation）完成之后才将它们真正的值填充进去 。这里有一点值得注意下 ：任何输出的方法声明都是在这个过程中实例化的 。这样做是让赋值变得更简单 。
-To instantiate the module graph, the engine will do what’s called a depth first post-order traversal. This means it will go down to the bottom of the graph — to the dependencies at the bottom that don’t depend on anything else — and set up their exports.
-为了实例化模块图表 ，引擎会执行称之为一次深层次的第一次输出的遍历（a depth first post-order traversal） 。这意味着它会沿着图表底层—到达底层的依赖，就是那些没有依赖其他模块的模块—然后设置它们的输出。
-
-The engine finishes wiring up all of the exports below a module — all of the exports that the module depends on. Then it comes back up a level to wire up the imports from that module.
-引擎完成与模块所有依赖的连接 ，然后回过来连接依赖该模块的其他模块 。
-Note that both the export and the import point to the same location in memory. Wiring up the exports first guarantees that all of the imports can be connected to matching exports.
-注意输出和引用的指向是内存中的同一个地址 。先连接输出是确保所有的引用能够连接到相匹配的输出 。
-This is different from CommonJS modules. In CommonJS, the entire export object is copied on export. This means that any values (like numbers) that are exported are copies.
-这一点是和 CJS 模块规范所不同的 。在 CJS 模块规范中 ，输出的对象输出时都是复制的 。这也就意味着任何输出的值都是副本 。
-This means that if the exporting module changes that value later, the importing module doesn’t see that change.
-也就是说如果改变输出的值 ，引用该值的模块并不能相应的改变 。
-
-
-In contrast, ES modules use something called live bindings. Both modules point to the same location in memory. This means that when the exporting module changes a value, that change will show up in the importing module.
-相反 ，ES 模块规范的绑定称之为实时绑定（live binding）。两个有引用关系的模块是指向内存中相同的地址 。当输出模块的值改变时 ，引入该值的模块会相应的改变 。
-Modules that export values can change those values at any time, but importing modules cannot change the values of their imports. That being said, if a module imports an object, it can change property values that are on that object.
-输出该值的模块可以随时改变值 ，但是引用该值的模块时不能改变它们引用的值的 。话虽这么说 ，如果引用的是一个对象 ，也是可以改变对象的属性值的 。
-
-
-The reason to have live bindings like this is then you can wire up all of the modules without running any code. This helps with evaluation when you have cyclic dependencies, as I’ll explain below.
-So at the end of this step, we have all of the instances and the memory locations for the exported/imported variables wired up.
-Now we can start evaluating the code and filling in those memory locations with their values.
-Evaluation
-The final step is filling in these boxes in memory. The JS engine does this by executing the top-level code — the code that is outside of functions.
-Besides just filling in these boxes in memory, evaluating the code can also trigger side effects. For example, a module might make a call to a server.
-
-
-Because of the potential for side effects, you only want to evaluate the module once. As opposed to the linking that happens in instantiation, which can be done multiple times with exactly the same result, evaluation can have different results depending on how many times you do it.
-This is one reason to have the module map. The module map caches the module by canonical URL so that there is only one module record for each module. That ensures each module is only executed once. Just as with instantiation, this is done as a depth first post-order traversal.
-What about those cycles that we talked about before?
-In a cyclic dependency, you end up having a loop in the graph. Usually, this is a long loop. But to explain the problem, I’m going to use a contrived example with a short loop.
-
-
-
-
-
-
-
-Let’s look at how this would work with CommonJS modules. First, the main module would execute up to the require statement. Then it would go to load the counter module.
-
-
-The counter module would then try to access message from the export object. But since this hasn’t been evaluated in the main module yet, this will return undefined. The JS engine will allocate space in memory for the local variable and set the value to undefined.
-
-
-Evaluation continues down to the end of the counter module’s top level code. We want to see whether we’ll get the correct value for message eventually (after main.js is evaluated), so we set up a timeout. Then evaluation resumes on main.js.
-
-
-The message variable will be initialized and added to memory. But since there’s no connection between the two, it will stay undefined in the required module.
-
-
-If the export were handled using live bindings, the counter module would see the correct value eventually. By the time the timeout runs, main.js’s evaluation would have completed and filled in the value.
-Supporting these cycles is a big rationale behind the design of ES modules. It’s this three-phase design that makes them possible.
-What’s the status of ES modules?
-With the release of Firefox 60 in early May, all major browsers will support ES modules by default. Node is also adding support, with a working groupdedicated to figuring out compatibility issues between CommonJS and ES modules.
-This means that you’ll be able to use the script tag with type=module, and use imports and exports. However, more module features are yet to come. The dynamic import proposal is at Stage 3 in the specification process, as is import.meta which will help support Node.js use cases, and the module resolution proposal will also help smooth over differences between browsers and Node.js. So you can expect working with modules to get even better in the future.
-Acknowledgements
-Thank you to everyone who gave feedback on this post, or whose writing or discussions informed it, including Axel Rauschmayer, Bradley Farias, Dave Herman, Domenic Denicola, Havi Hoffman, Jason Weathersby, JF Bastien, Jon Coppeard, Luke Wagner, Myles Borins, Till Schneidereit, Tobias Koppers, and Yehuda Katz, as well as the members of the WebAssembly community group, the Node modules working group, and TC39.
-
+First, all of your script tags need to be in the right order. Then 
+you have to be careful to make sure that no one messes up that order.
+第一 ， 必须将所有的 script 标签正确的排序 ，然后你还必须小心翼翼的确保没有一个搞
+混顺序 。  
+If you do mess up that order, then in the middle of running, your app 
+will throw an error. When the function goes looking for jQuery where 
+it expects it — on the global — and doesn’t find it, it will throw 
+an error and stop executing.  
+如果搞混了顺序 ，在应用运行过程中 ，会报错 。当一个方法在它期望的地方想要查找 
+jQuery （例如全局） ，但是没有找到 ，它就会报错 ，并停止执行 。  
+This makes maintaining code tricky. It makes removing old code or 
+script tags a game of roulette. You don’t know what might break. 
+The dependencies between these different parts of your code are 
+implicit. Any function can grab anything on the global, so you 
+don’t know which functions depend on which scripts.  
+这样的后果 ，就是在处理代码时要谨小慎微 。使得删除老代码或者 script 标签就像是在
+玩轮盘赌 。你不知道什么会崩溃 。不同代码之间的相互依赖含糊不清 。任意方法都能获取
+到全局中的任何对象 ，所以你搞不清方法依赖哪个脚本 。  
+A second problem is that because these variables are on the global 
+scope, every part of the code that’s inside of that global scope 
+can change the variable. Malicious code can change that variable 
+on purpose to make your code do something you didn’t mean for it 
+to, or non-malicious code could just accidentally clobber your 
+variable.  
+第二个问题是因为这些变量都是暴露在全局 ，所以全局下的各个部分的代码都可以改变变量
+的值 。恶意代码会有目的的改变你的代码使之不按预定的目标执行 ，或者非恶意的代码很
+可能会重新定义你的变量 。  
+How do modules help?  
+模块能做什么 ？  
+Modules give you a better way to organize these variables and 
+functions. With modules, you group the variables and functions 
+that make sense to go together.  
+模块可以让你更好的组织这些变量和方法 。使用模块 ，你可以把具有一定意义的对象和方
+法组织在一起 。  
+This puts these functions and variables into a module scope. The 
+module scope can be used to share variables between the functions 
+in the module.  
+将方法和对象放到一个模块里 ，模块里的方法可以共享这个模块作用域的变量 。  
+But unlike function scopes, module scopes have a way of making their 
+variables available to other modules as well. They can say explicitly 
+which of the variables, classes, or functions in the module should 
+be available.  
+但与方法的作用域不同 ，模块的作用域有一种方式能够使它的变量能够在其他的模块中使用 ，
+并且能够精确地暴露出变量 、类或者方法 。  
+When something is made available to other modules, it’s called an 
+export. Once you have an export, other modules can explicitly say 
+that they depend on that variable, class or function.  
+使当前模块的对象能够在其他模块中使用 ，这种处理方式称为 export 。一旦模块有一个输
+出 ，其他的模块可以清晰的说明它们依赖输出中的对象 、类或者方法 。  
+Because this is an explicit relationship, you can tell which modules 
+will break if you remove another one.  
+因为这种明确的依赖关系，所以当你删除某个模块时能够明确的知道哪些模块会崩溃。  
+Once you have the ability to export and import variables between 
+modules, it makes it a lot easier to break up your code into small 
+chunks that can work independently of each other. Then you can 
+combine and recombine these chunks, kind of like Lego blocks, to 
+create all different kinds of applications from the same set of 
+modules.  
+一旦 ，能够在不同的模块之间输出 、引用变量，将代码拆分成能够独立运行的小块会变得轻
+而易举 。那时你就可以使代码像乐高积木一样 ，任意的组织这些模块 ，去实现不同功能的
+应用。  
+Since modules are so useful, there have been multiple attempts to 
+add module functionality to JavaScript. Today there are two module 
+systems that are actively being used. CommonJS (CJS) is what Node.js 
+has used historically. ESM (EcmaScript modules) is a newer system 
+which has been added to the JavaScript specification. Browsers 
+already support ES modules, and Node is  adding support.  
+因为模块很有用 ，曾经有多种尝试给 JS 添加模块规范 。目前比较常用的模块规范有两种 ，
+CommonJS 是 Node.js 曾经的模块规范 。ESM 是一种新的规范被添加到 JavaScript 
+语言规范中 。 浏览器都已经支持 ES 模块规范了 ，并且 Node 正在支持这种规范。  
+Let’s take an in-depth look at how this new module system works.  
+让我们深入了解这种规范是如何工作的 。  
+How ES modules work ES  
+模块规范如何使用  
+When you’re developing with modules, you build up a graph of 
+dependencies. The connections between different dependencies come 
+from any import statements that you use.  
+当你使用模块进行开发时 ，将会构建一个依赖的图标 。不同依赖之间的联系都依赖于你使用
+的依赖说明 。  
