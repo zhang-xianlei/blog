@@ -40,4 +40,29 @@ id_rsa.pub
 </div>
 
 
-#### 三、什么是 SSH
+#### 三、生成 SSH 秘钥并添加到 SSH 代理
+f you don't want to reenter your passphrase every time you use your SSH key, you can add your key to the SSH agent, 
+which manages your SSH keys and remembers your passphrase.
+如果在使用 SSH 秘钥时，不想每次重新登录时使用密码，你可以添加秘钥到 SSH 代理，代理能够管理秘钥并记住密码。
+###### 生成新的 SSH 秘钥
+1. 打开终端。
+2. 复制下面的脚本，并替换成自己的 GitHub 邮箱地址。  
+
+        ssh-keygen -t rsa -b 4096 -C "your_email@example.com"  
+    这样就使用提供的邮箱地址作为标签生成了一个新的 SSH 秘钥。  
+
+        Generating public/private rsa key pair.
+3. 当弹出提示，输入一个文件用于存储秘钥，直接点击 Enter 键。这样就存储到默认的文件地址。  
+
+        Enter a file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter] 
+4. 在提示中，输入一个安全密码。更多相关信息，可以点击查看
+    ["使用 SSH 秘钥密码"](https://help.github.com/articles/working-with-ssh-key-passphrases/)。
+    
+        Enter passphrase (empty for no passphrase): [Type a passphrase]
+        Enter same passphrase again: [Type passphrase again]
+###### 添加 SSH 秘钥到 SSH 代理
+When adding your SSH key to the agent, use the default macOS ssh-add command, and not an application installed 
+by macports, homebrew, or some other external source.
+
+#### 四、
+#### 五、
