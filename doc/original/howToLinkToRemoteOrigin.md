@@ -41,8 +41,6 @@ id_rsa.pub
 
 
 #### 三、生成 SSH 秘钥并添加到 SSH 代理
-f you don't want to reenter your passphrase every time you use your SSH key, you can add your key to the SSH agent, 
-which manages your SSH keys and remembers your passphrase.
 如果在使用 SSH 秘钥时，不想每次重新登录时使用密码，你可以添加秘钥到 SSH 代理，代理能够管理秘钥并记住密码。
 ###### 生成新的 SSH 秘钥
 1. 打开终端。
@@ -63,6 +61,19 @@ which manages your SSH keys and remembers your passphrase.
 ###### 添加 SSH 秘钥到 SSH 代理
 When adding your SSH key to the agent, use the default macOS ssh-add command, and not an application installed 
 by macports, homebrew, or some other external source.
+把 SSH 秘钥添加到代理时，使用默认的 macOs ssh-add 命令，而不是使用 macports、homebrew 或者其他的外部资源安装的应用。
+1. 在后台启动 ssh-agent
 
+        $ eval "$(ssh-agent -s)"
+        Agent pid 595662.  
+2.  如果使用的时 macOs Sierra 10.12 或者更新的版本， 需要更改 ~/.ssh/config 文件去自动生成 ssh-agent 使用的秘钥，并且存储语句到本地的钥匙串。  
+
+    <div style="border: 1px solid #819b69;color:#4d712b;">
+        Host *  <br/>
+          AddKeysToAgent yes <br/>
+          UseKeychain yes <br/>
+          IdentityFile ~/.ssh/id_rsa
+    </div>
+         
 #### 四、
 #### 五、
