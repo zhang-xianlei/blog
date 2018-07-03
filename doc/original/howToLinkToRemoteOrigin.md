@@ -42,7 +42,7 @@ id_rsa.pub
 
 #### 三、生成 SSH 秘钥并添加到 SSH 代理
 如果在使用 SSH 秘钥时，不想每次重新登录时使用密码，你可以添加秘钥到 SSH 代理，代理能够管理秘钥并记住密码。
-###### 生成新的 SSH 秘钥
+##### 生成新的 SSH 秘钥
 1. 打开终端。
 2. 复制下面的脚本，并替换成自己的 GitHub 邮箱地址。  
 
@@ -58,7 +58,7 @@ id_rsa.pub
     
         Enter passphrase (empty for no passphrase): [Type a passphrase]
         Enter same passphrase again: [Type passphrase again]
-###### 添加 SSH 秘钥到 SSH 代理
+##### 添加 SSH 秘钥到 SSH 代理
 把 SSH 秘钥添加到代理时，使用默认的 macOs ssh-add 命令，而不是使用 macports、homebrew 或者其他的外部资源安装的应用。
 1. 在后台启动 ssh-agent
 
