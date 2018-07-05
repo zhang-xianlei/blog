@@ -1,4 +1,4 @@
 .idea/
-node_module/
-dist/
+node_modules/
+dist/git
 *.json
