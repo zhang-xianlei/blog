@@ -11,7 +11,24 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
     <meta name="x5-orientation" content="portrait">
+    <style>
+        p{
+            color: #fff;
+            font-size: 14px;
+            background: grey;
+        }
+        div>p:only-of-type{
+            background: purple;
+        }
+    </style>
 </head>
 <body>
+<div>
+    <p>this is the first paragraph!</p>
+    <div>this is the second paragraph!</div>
+</div>
+<div>
+    <p>this is the third paragraph!</p>
+</div>
 </body>
 </html>
