@@ -1,8 +1,0 @@
-.border-img {
-    width: 150px;
-    height: 100px;
-    border: 27px solid;
-    border-image: url('./border.png') 40 round stretch;
-}
-
-
