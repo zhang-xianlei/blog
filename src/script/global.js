@@ -80,3 +80,5 @@ function RatioHandle() {
         }
     }
 }
+
+export const ratioPop = new RatioHandle()
