@@ -27,22 +27,25 @@ export const getParams = () => {
     return resultObj;
 }
 
+/**
+ * 浏览器缩放比例处理
+ */
 class RatioHandle {
     constructor() {
         /*
          * 获取浏览器的缩放比例
          */
         this.discernRation = () => {
-            var ratio = 0, screen = window.screen, ua = navigator.userAgent.toLowerCase();
+            var ratio = 0,
+                screen = window.screen,
+                ua = navigator.userAgent.toLowerCase();
             if (typeof window.devicePixelRatio !== 'undefined') {
                 ratio = window.devicePixelRatio;
-            }
-            else if (ua.indexOf('msie') > -1) {
+            } else if (ua.indexOf('msie') > -1) {
                 if (screen.deviceXDPI && screen.logicalXDPI) {
                     ratio = screen.logicalXDPI / screen.deviceXDPI;
                 }
-            }
-            else if (typeof window.outerWidth !== "undefined" && typeof window.innerWidth !== "undefined") {
+            } else if (typeof window.outerWidth !== "undefined" && typeof window.innerWidth !== "undefined") {
                 ratio = window.outerWidth / window.innerWidth;
             }
             if (ratio) {
