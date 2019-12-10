@@ -92,4 +92,6 @@ class RatioHandle {
     }
 }
 
+class Utils = {}
+
 export const ratioPop = new RatioHandle()
