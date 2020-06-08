@@ -1,1 +1,0 @@
-document.cookie = "name=zjamg;login=qq;";
