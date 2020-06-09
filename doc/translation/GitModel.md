@@ -20,4 +20,126 @@
 
 ![img](https://nvie.com/img/centr-decentr@2x.png)
 
-每个开发人员从 origin 库中拉取和推动代码。但是除了针对中央库的拉取-推送的关系，获取每个开发者还需要获取其他开发小组同事的推送。举个例子，在两个以上的开发人员共同开发一个大的
+每个开发人员从 origin 库中拉取和推动代码。但是除了中央库的拉取-推送的关系，每个开发者还需要获取其他开发小组同事的推送。举个例子，在两个以上的开发人员共同开发一个大的功能，再推送到 origin 之前，需要一个过程让这个功能逐渐成熟。上图，这里有三个小组，分别是 Alice 和 Bob，Alice 和 David，以及 Clair 和 David。  
+
+技术上，无非就是 Alice 新建了一个远程库，并命名为 bob，指向 Bob 的代码库，反之亦然。  
+
+## 主分支
+
+这个开发模式在核心部分，受到现有开发模式很大的启发。中央库拥有两个主要的分支并且拥有无限的生命周期：
+
+* master  
+* develop  
+
+![img](https://nvie.com/img/main-branches@2x.png)
+
+origin 上的主分支 master 应该为所有 Git 用户熟知，与其并行的分支称之为 develop。  
+
+一般会把 origin/master 作为主分支，并且该分支的源码的 HEAD 一直反映即将打包上线的状态。
+
+一般会把 origin/develop 作为源码的 HEAD 一直反映为下个版本最后提交的功能状态的主分支。有些开发者会称之为“集成分支”，一般也是在这个分支上自动编译打包。  
+
+当 develop 分支上的源码达到了一种稳定的状态，并且转杯发布上线了，所有改变应该合到 master 分支，并打上发布版本号的标签。具体细节，下文我们继续讨论。  
+
+因此，每当将新开发代码合并到 master 分支上时，就是产品要发布的时候。只有严格遵守这一点，理论上，才能使用 Git 钩子脚本实现自动构建以及每次将代码转化成服务器上的产品时，都会有个备注提交到主分支上。  
+
+## 支持多分支
+
+除了 master 和 develop 两个主要分支，这个开发模式开发团队成员使用多种多样的支持分支进行并行开发，项目易于增加新功能，随时准备产品发布以及快速响应线上产品bug修复。不想主分支，这些分支一般生命周期很短，并最终会被彻底删除。
+
+常用的不同类型的分支：
+
+* Feature branches
+* Release branches
+* Hotfix branches
+
+这些分支都有特殊的目的，并且与遵循关于选取某个分支作为原始分支并且必须合并到相应的原始分支上等严格的规则，售后我们将继续探讨这些。  
+
+这些分支的“特殊性”并非来自技术本身的所具有的概念，分支类型的分类取决于我们使用的目的，它们仅仅是 Git 的分支。  
+
+### Feature 分支
+
+始于：
+
+develop
+
+合并到：
+
+develop
+
+分支命名规则：
+
+除了： master, develop, release-*和hot-*。  
+
+![img](https://nvie.com/img/fb@2x.png)  
+
+feature 分支（有时称为 topic 分支）是用于开发即将发布新功能或者扩展线上的一个老功能。当开发新功能时，将要被合并到发布目标的功能或许还是位置的。一个 feature 分支的本质就是会存在于整个新功能的开发过程中，但是最终会被合并到 develop 分支上（确定最终添加新功能到即将发布的版本）或者被废弃（可能是一个没有达到预期效果的功能）。  
+
+典型的 feature 分支只出现在开发者仓库中，而不会出现在 origin 仓库中。
+
+#### <center>新建一个 feature 分支</center>  
+
+开发新功能时，在 develop 分支上新建 feature 分支
+
+     $ git checkout -b myfeature develop
+     Switch to a new branch "myfeature"  
+
+#### <center>将 feature 分支合并到 develop 分支</center>
+
+新功能开发完成后，将分支合并到 develop 分支，最终添加到即将发布的版本上：
+
+    $ git checkout develop
+    Switch to branch 'develop'
+    $ git merge --no-off myfeature
+    Updating ea1b82a...05e9557
+    (Summary of changes)
+    $ git branch -d myfeature
+    Delete branch myfeature(was 05e9557).
+    $ git push origin develop
+
+合并代码使用 --no-ff 参数，会生成一个新的 commit 信息，即使可以使用 fast-forward 模式合并。这样做可以避免丢失 feature 分支的详细历史信息，会将所有的提交信息随新功能的合并而合并到其他分支上。可以通过下面的图例进行对比两者的不同之处： 
+
+![img](https://nvie.com/img/merge-without-ff@2x.png)
+
+后面那种合并方式，是不能通过 Git 历史记录中查看已经合并的新功能分支在实施过程中的提交信息的——只有通过手动读取所有的历史信息查看。如果使用后面的合并方式，想要恢复整个 feature 分支（例如，一系列的提交信息，是一件很头疼的事，但是如果使用 --no-ff 参数进行合并分支，是很容易实现的。  
+
+当然，使用第一种方式，会生成一个比较大的提交信息，但是利总是大于弊的。  
+
+### Release 分支
+
+始于：
+
+develop
+
+合并到：
+
+develop 和 master
+
+分支命名规则：
+
+release-*
+
+release 分支是用来为新产品发布做准备工作的。在这个分支上允许最后对即将发布的版本进行细节上的调整（dot of i`s and ）。此外还可以对一些小的 bug 进行修复，以及添加与版本发布相关的信息（例如：版本号、打包上线日期等）。在 release 分支上做这些工作的同时, develop 分支可以接受为另外一次大版本发布的新功能开发。  
+
+从 develop 分支上拉取 release 分支的关键点是确定整个开发过程中对 release 分支需求状态的适时反馈。至少能够及时保证所有将要发布打包的新功能已经合并到 develop 分支上。并且规划中的下次版本的迭代新功能没有合并到 develop 分支上——它们需要等 从develop 分支上 创建 release 分支之后。  
+
+恰好在新建一个 release 分支的时候，即将发布的版本获得版本号——不能太早获取。直到那一刻，从 develop 分支上才能获取下一个 release 分支的版本号，除非 release 分支创建好之后，才能确认下个一个 release 分支的版本号最终是 0.3 还是 1.0。release 版本号的确定，取决于 release 创建的时间点，以及项目在版本号规则。
+
+#### <center>创建一个 release 分支</center>
+
+release 分支是创建在 develop 分支上的。假如当前产品的版本号是 1.1.5 并且有个大的版本即将要发布。develop 的状态是可以发布下一个版本，所以可以确定即将发布的版本为 1.2（而不是 1.16.或者 2.0）。所以可以给 release 分支取一个能反馈新版本的名称：
+
+    $ git chekcout -b release-1.2 develop
+    Switched to a new branch "release-1.2"
+    $ ./bump-version.sh 1.2
+    File modified successfully, version bumped to 1.2
+    $ git commit -a -m "Bumped version number to 1.2"
+    1 files changed, 1 insertions(+), 1 deleltions(-)
+
+新建分支，并切换到新分支，更改版本号。这里，bump-version 是一个虚构的用于改变一些工作空间内关联版本号的文件文件名的脚本。然后提交更改版本号的操作。
+
+这个 release 分支只会存在一段时间，直到当前版本发布。整个分支的生命周期中，会修复一些 bug（而不是在 develop 分支上）。新增大的功能点是被禁止的。该分支必须合并到 develop 分支，然后，等待下一个版本的发布。  
+
+#### <center> release 分支的结束</center>
+
+当 release 分支的状态已经可以成为一个真正的可发布版本，一些流程需要执行。首先要合并到 master 分支（记住，master 分支的提交信息都是一个新 release 分支）。然后， master 分支上的提交信息一定要打标签，方便以后开发时以历史版本作为参考。最终在 release 版本上的更改要合并到 develop 分支，以保证以后的 release 版本能够包含这些修复的 bug。
