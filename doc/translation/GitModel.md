@@ -193,3 +193,23 @@ hotfix-*
 hotfix 分支的创建也是意味着产品需要发布，在这方面，它们和 release 分支很像，尽管发布不是计划之中的。它们的创建是针对线上产品出现非预期的状态时必须做出应急处理。当一个特定版本的产品出现严重错误时必须立即解决，hotfix 分支，将要从与当前产品版本保持一直的 master 分支上创建。当团队中成员在快速修复 bug 的同时，本质上来说其他开发人员（在 develop 分支上）是可以继续开发其他功能的。
 
 #### <center>创建 hotfix 分支</center>
+
+hotfix 分支是创建在 master 上的。例如，现在线上运营的产品版本是 1.2，并且发现一个紧急的 bug。但是目前 develop 分支上新增的功能还没有稳定。这时就需要从 master 分支上新建分支，开始修复 bug：
+
+    $ git checkout -b hotfix-1.2.1 master
+    Switched to a new branch "hotfix-1.2.1"
+    $ ./bump-version.sh 1.2.1
+    Files modified successfully, version bumped to 1.2.1
+    $ git commit -a -m "Bumped version number to 1.2.1"
+    [hotfix-1.2.1 41e61bb] Bumped version number to 1.2.1
+    1 files changed, 1 insertions(+), 1 deletions(-)
+
+新建分支之后，不要忘记更改版本号。
+
+然后，使用一个或者多个提交修复bug。
+
+    $ git commit -m "Fixed severe production problem"
+    [hotfix-1.2.1 abbe5ed6] Fixed severe production problem
+    5 files changed, 32 insertions(+), 17 deletions(-)
+
+#### <center>hotfix 分支完成开发</center>
