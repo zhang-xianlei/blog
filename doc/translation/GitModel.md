@@ -213,3 +213,36 @@ hotfix 分支是创建在 master 上的。例如，现在线上运营的产品�
     5 files changed, 32 insertions(+), 17 deletions(-)
 
 #### <center>hotfix 分支完成开发</center>
+
+当开发完成，修复的漏洞不仅要合并到 master 分支，也要合并到 develop 分支上，以保证修复的漏洞包含在下一个发布的版本中，这和 release 分支开发完成时的操作流程一样。
+
+首先更新 master 分支，并为 release 分支打上标签。
+
+    $ git checkout master
+    Switched to branch 'master'
+    $ git merge --no-ff hotfix-1.2.1
+    Merge made by recursive
+    (summary of changes)
+    $ git tag -a 1.2.1
+
+<div style="border: 1px solid rgba(0,0,0,.35); border-radius: 4px; text-indent:10px;padding:20px">
+备注：也可以使用 -s 或者 -u 参数为打的标签加密。
+</div>
+
+下一步，将代码合并到 develop 分支上：
+
+    $ git checkout develop
+    Switched to branch 'develop'
+    $ git merge --no-ff hotfix-1.2.1
+    Merge made by recursive
+    (summary of changes)
+ 
+在这一步，有一个不同步骤是： 如果当前有 release 分支存在，则 hotfix 分支需要合并到 release 分支，而不是 develop 分支上。这样做，当 release 分支开发完成之后，漏洞的修复最终还是可以合并到 develop 分支上的（如果现实工作中，develop 分支上等不了 现有的 release 分支开发完成就需要这个修复的漏洞，你同样也可以将 hotfix 分支直接合并到 develop 分支上）。
+
+最后，删除 hotfix 分支：
+
+    $ git branch -d hotfix-1.2.1
+    Delete the branch hotfix-1.2.1 (was abbe56d)
+
+## 总结
+
