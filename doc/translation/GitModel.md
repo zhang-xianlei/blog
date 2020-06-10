@@ -143,3 +143,53 @@ release 分支是创建在 develop 分支上的。假如当前产品的版本号
 #### <center> release 分支的结束</center>
 
 当 release 分支的状态已经可以成为一个真正的可发布版本，一些流程需要执行。首先要合并到 master 分支（记住，master 分支的提交信息都是一个新 release 分支）。然后， master 分支上的提交信息一定要打标签，方便以后开发时以历史版本作为参考。最终在 release 版本上的更改要合并到 develop 分支，以保证以后的 release 版本能够包含这些修复的 bug。
+
+Git 的前两个操作步骤：
+
+    $ git checkout master
+    Switched to branch 'master'
+    $ git merge --no-ff release-1.2
+    Merge made by recursive
+    (summary of changes)
+    $ git tag -a 1.2
+
+现在发布已经完成，并且为将来发布打好标记。  
+
+<div style="border: 1px solid rgba(0,0,0,.35); border-radius: 4px; text-indent:10px;padding:20px">
+备注：也可以使用 -s 或者 -u 参数为打的标签加密。
+</div>
+
+为了保存在 release 分支上做的更改，需要将 release 分支合并到 develop 分支上，所以，使用 Git：
+
+    $ git checkout develop
+    Switched to branch 'develop'
+    $ git merge --no-ff release-1.2
+    Merge made by recursive
+    (summary of changes)
+
+这一步很可能会导致冲突（或许甚至，因为改变了版本号）。如果存在冲突，就处理它并提交。  
+
+现在，是真的完成了，release 分支只要不需要它，就可以删除了。
+
+    $ git branch -d release-1.2
+    Delete branch release-1.2 (was ff452fe)
+
+### Hotfix 分支
+
+始于：
+
+master
+
+必须合并到：
+
+develop 和 master
+
+分支命名规范：
+
+hotfix-*
+
+![img](https://nvie.com/img/hotfix-branches@2x.png)
+
+hotfix 分支的创建也是意味着产品需要发布，在这方面，它们和 release 分支很像，尽管发布不是计划之中的。它们的创建是针对线上产品出现非预期的状态时必须做出应急处理。当一个特定版本的产品出现严重错误时必须立即解决，hotfix 分支，将要从与当前产品版本保持一直的 master 分支上创建。当团队中成员在快速修复 bug 的同时，本质上来说其他开发人员（在 develop 分支上）是可以继续开发其他功能的。
+
+#### <center>创建 hotfix 分支</center>
