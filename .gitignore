@@ -1,5 +1,5 @@
-.idea/
-node_module/
+.history/
+node_modules/
 dist/
 *.json
 .history/
