@@ -8,7 +8,9 @@
 
 ## 译文
 
-1. [图说 ESM](./doc/translation/introductionOfESM.md)  
+1. [图说 ESM](./doc/translation/introductionOfESM.md)
+
+2. [Git 分支管理模式](./doc/translation/GitModel.md)
 
 ## 总结  
 
